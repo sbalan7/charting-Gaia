@@ -39,3 +39,5 @@ for clustername in clusterlist:
     driver.get(clusterlink)
     time.sleep(10)
     driver.save_screenshot('/home/sbalan7/Desktop/Code/charting-Gaia/plots/' + clustername + '.png')
+
+driver.quit()
