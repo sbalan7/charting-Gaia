@@ -18,7 +18,7 @@ driver.find_element_by_xpath("//select[@name='-out.max']/option[text()='unlimite
 element = driver.find_element_by_xpath(".//*[@id='vcst']")
 element.submit()
 
-time.sleep(10)
+time.sleep(30)
 
 # Make a list of all the clusters from the table
 clusterlist = []
@@ -34,10 +34,36 @@ for row in table.find_elements_by_css_selector('tr'):
             clusterlist.append(d.text)
             break
 
+
+i = 0
+error_clusters = []
+
 for clustername in clusterlist:
+    i += 1
+    
     clusterlink = CLUSTER_PLOT1 + clustername + CLUSTER_PLOT2
     driver.get(clusterlink)
+    
+    print(f'Working on {clustername}, {i}/{len(clusterlist)}')
     time.sleep(10)
-    driver.save_screenshot('/home/sbalan7/Desktop/Code/charting-Gaia/plots/' + clustername + '.png')
+    
+    for _ in range(10):
+        try:
+            driver.find_element_by_tag_name('canvas')
+        except:
+            if _ == 9:
+                print(f'Cluster {clustername} without a proper file, added to error list')
+                error_clusters.append(clustername)
+                break
+            time.sleep(2)
+            print(f'Cluster {clustername} slow to load, trying again')
+        else:
+            driver.save_screenshot('/home/sbalan7/Desktop/Code/charting-Gaia/plots/' + clustername + '.png')
+            print(f'Saved a file for cluster {clustername}')
+            break
+
+print(f'Failed to gather plots for {len(error_clusters)} images, writing error file')
+with open('failed.txt', 'w') as f:
+    f.writelines(error_clusters)
 
 driver.quit()

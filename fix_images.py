@@ -11,6 +11,7 @@ graph_u = 54
 graph_r = 1062
 graph_b = 551
 i = 0
+tt = 0
 
 for cluster in clusters:
     tic = time.time()
@@ -29,7 +30,8 @@ for cluster in clusters:
     im.save(root+'mod/'+cluster, quality=100)
 
     toc = time.time()
-    
+    tt += (toc - tic)
     i += 1
     print(f'Iteration {i}/{len(clusters)}: writing {cluster}, time taken = {toc-tic}')
-    
+
+print(f'Conversion complete in {tt} seconds')
