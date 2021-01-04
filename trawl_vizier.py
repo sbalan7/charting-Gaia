@@ -53,7 +53,7 @@ for clustername in clusterlist:
         except:
             if _ == 9:
                 print(f'Cluster {clustername} without a proper file, added to error list')
-                error_clusters.append(clustername)
+                error_clusters.append(clustername+'\n')
                 break
             time.sleep(2)
             print(f'Cluster {clustername} slow to load, trying again')
