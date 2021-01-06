@@ -27,7 +27,7 @@ for cluster in clusters:
     im = ImageOps.mirror(im)
     im = ImageOps.flip(im)
 
-    im = im.convert('1')
+    im = ImageOps.grayscale(im)
     
     im.save(root+'mod/'+cluster, quality=100)
 
