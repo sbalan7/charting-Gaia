@@ -26,6 +26,8 @@ for cluster in clusters:
     im = im.transpose(Image.ROTATE_90)
     im = ImageOps.mirror(im)
     im = ImageOps.flip(im)
+
+    im.convert('1')
     
     im.save(root+'mod/'+cluster, quality=100)
 
