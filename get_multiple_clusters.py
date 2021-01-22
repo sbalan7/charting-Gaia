@@ -2,13 +2,17 @@ from selenium import webdriver
 import matplotlib.pyplot as plt
 import time
 import sys
+import os
 
 
 VizieR_ROOT = 'https://vizier.u-strasbg.fr/viz-bin/'
 OPTIONS = 'VizieR-6?-out.form=%2bH&-source=J/A%2bA/618/A93&Cluster='
 
-targetcluster = sys.argv[1] + '_' + sys.argv[2]
-cluster = sys.argv[1] + ' ' + sys.argv[2]
+def get_cluster_list():
+    with open('select.txt', 'r') as f:
+        clusters = f.read().splitlines()
+        
+    return clusters
 
 def collect_data(targetcluster):
     # Open VizieR website
@@ -43,9 +47,9 @@ def collect_data(targetcluster):
     if len(gmag) <= 10:
         raise ValueError('Cluster not found')
 
-    return gmag, bprp
+    return bprp, gmag
 
-def plot(bprp, gmag):
+def plot(bprp, gmag, cluster):
     fig = plt.figure(figsize=(10, 6))
     s = plt.scatter(bprp, gmag)
     ax = s.axes
@@ -55,4 +59,16 @@ def plot(bprp, gmag):
     ax.set_title(f'Star Distribution in {cluster}')
     ax.grid(True)
     fig.tight_layout()
-    plt.savefig(cluster+'.png')
+    plt.savefig(os.getcwd()+'/plots/'+cluster+'.png')
+
+
+clusters = get_cluster_list()
+
+for cluster in clusters:
+    print(f'Collecting data for {cluster}')
+    tic = time.time()
+    target = cluster.replace(' ', '_')
+    b, g = collect_data(target)
+    plot(b, g, cluster)
+    toc = time.time()
+    print(f'Completed in {toc-tic} sec(s)')
