@@ -13,9 +13,8 @@ def get_cluster_list():
         
     return clusters
 
-def collect_data(targetcluster, threshold=0.3):
+def collect_data(targetcluster, driver, threshold=0.3):
     # Open VizieR website
-    driver = webdriver.Firefox()
     driver.get(VizieR_ROOT+OPTIONS+targetcluster)
 
     driver.find_element_by_xpath("//select[@name='-out.max']/option[text()='unlimited']").click()
@@ -27,8 +26,8 @@ def collect_data(targetcluster, threshold=0.3):
 
     gmag = []
     bprp = []
-    ug = []
-    ub = []
+    prog = []
+    prob = []
 
     for row in table.find_elements_by_css_selector('tr'):
         x = 0
@@ -45,20 +44,18 @@ def collect_data(targetcluster, threshold=0.3):
                 bprp.append(float(d.text))
             if (x == 13):
                 if float(d.text) > threshold:
-                    ub.append(bprp[-1])
-                    ug.append(gmag[-1])
-    
-    driver.quit()
-    
+                    prob.append(bprp[-1])
+                    prog.append(gmag[-1])
+        
     if len(bprp) <= 10:
         print('Cluster not found')
 
-    return bprp, gmag, ub, ug
+    return bprp, gmag, prob, prog
 
-def plot(bprp, gmag, ub, ug, cluster):
-    fig = plt.figure(figsize=(10, 6))
-    s = plt.scatter(ub, ug, color='blue', marker='o')
-    s = plt.scatter(bprp, gmag, color='red', marker='.')
+def plot(bprp, gmag, prob, prog, cluster):
+    fig = plt.figure(figsize=(14, 8))
+    s = plt.scatter(bprp, gmag, color='red', marker='.', label='All stars')
+    s = plt.scatter(prob, prog, color='blue', marker='o', label='Probable member')
     ax = s.axes
     ax.invert_yaxis()
     ax.set_xlabel(r'$BP-RP$', fontsize=12)
@@ -66,17 +63,25 @@ def plot(bprp, gmag, ub, ug, cluster):
     ax.set_title(f'Star Distribution in {cluster}')
     ax.grid(True)
     fig.tight_layout()
+    plt.legend()
     plt.savefig(os.getcwd()+'/plots/'+cluster+'.png')
     plt.close(fig)
 
 
-clusters = get_cluster_list()
+def main():
+    driver = webdriver.Firefox()
+    clusters = get_cluster_list()
 
-for cluster in clusters:
-    print(f'Collecting data for {cluster}')
-    tic = time.time()
-    target = cluster.replace(' ', '_')
-    b, g, ub, ug = collect_data(target)
-    plot(b, g, ub, ug, cluster)
-    toc = time.time()
-    print(f'Completed in {toc-tic} sec(s)')
+    for cluster in clusters:
+        print(f'Collecting data for {cluster}')
+        tic = time.time()
+        target = cluster.replace(' ', '_')
+        b, g, ub, ug = collect_data(target, driver)
+        plot(b, g, ub, ug, cluster)
+        toc = time.time()
+        print(f'Completed in {toc-tic} sec(s)')
+
+    driver.quit()
+
+if __name__ == '__main__':
+    main()
