@@ -8,6 +8,7 @@ isochrone = '0.2gy'
 
 pd.set_option('display.max_columns', None)
 
+# Load the isochrone and cluster data downloaded
 def load_data():
     iso_path = os.getcwd() + '/isochrones/' + isochrone + '.dat'
     iso_headers = 'Zini MH logAge Mini int_IMF Mass logL logTe logg label McoreTP C_O period0 period1 period2 period3 period4 pmode Mloss tau1m X Y Xc Xn Xo Cexcess Z mbolmag Gmag G_BPmag G_RPmag B_Tmag V_Tmag Jmag Hmag Ksmag'.split(' ')
@@ -28,6 +29,7 @@ def load_data():
 
     return iso_df, clu_df
 
+# Take mean of parallax and inverted, common distance for magnitude calculation
 def calc_dist(clu_df):
     plx = clu_df[clu_df['Plx'] <= 9]
     plx = clu_df['Plx']
@@ -38,18 +40,20 @@ def plot_isochrone(iso_df, clu_df, ag, bprp, d):
     G_BPmag = iso_df['G_BPmag']
     G_RPmag = iso_df['G_RPmag']
     
+    # Magnitude calculation
     gmag = Gmag + 5 * np.log(d) - 5 + ag
     bprp = G_BPmag - G_RPmag + bprp
 
+    # Some missing sources in the data cause outliers, and are removed
     cleaned_clu = clu_df[(clu_df['Gmag'] < 90) & (clu_df['BP-RP'] < 90)]
     star_gmag = cleaned_clu['Gmag']
     star_bprp = cleaned_clu['BP-RP']
 
+    # Plot stars and isochrones
     fig = plt.figure(figsize=(10, 6))
     s = plt.scatter(star_bprp, star_gmag, color='red', marker='.')
     p = plt.plot(bprp, gmag, color='black', linewidth=1)
-    #plt.xlim([-1, 4])
-    #plt.ylim([0, 20])
+
     ax = s.axes
     ax.invert_yaxis()
     ax.set_xlabel(r'$BP-RP$', fontsize=12)
@@ -58,7 +62,7 @@ def plot_isochrone(iso_df, clu_df, ag, bprp, d):
     ax.grid(True)
     plt.show()
 
-    
+# Findging the mean and median value of AG and E(BP-RP)
 def find_ag_e_bprp(clu_df):
     ag = clu_df[clu_df['AG'] <= 90]
     ag = ag['AG']
