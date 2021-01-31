@@ -1,0 +1,46 @@
+{
+    "IC 4651": {
+        "isochrone": "1.1gy",
+        "distance": "888"
+    },
+    "IC 4756": {
+        "isochrone": "0.5gy",
+        "distance": "484"
+    },
+    "NGC 752": {
+        "isochrone": "2gy",
+        "distance": "452"
+    },
+    "NGC 1664": {
+        "isochrone": "0.3gy",
+        "distance": "1199"
+    },
+    "NGC 2281": {
+        "isochrone": "0.35gy",
+        "distance": "558"
+    },
+    "NGC 2287": {
+        "isochrone": "0.24gy",
+        "distance": "693"
+    },
+    "NGC 2360": {
+        "isochrone": "0.5gy",
+        "distance": "1887"
+    },
+    "NGC 2527": {
+        "isochrone": "0.45gy",
+        "distance": "601"
+    },
+    "NGC 6281": {
+        "isochrone": "0.3gy",
+        "distance": "479"
+    },
+    "NGC 6405": {
+        "isochrone": "0.1gy",
+        "distance": "487"
+    },
+    "NGC 6475": {
+        "isochrone": "0.3gy",
+        "distance": "301"
+    }
+}

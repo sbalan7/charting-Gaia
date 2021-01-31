@@ -1,4 +1,5 @@
 import pandas as pd
+import json
 import os
 
 
@@ -13,5 +14,8 @@ def gen_radec(cluster_name):
     radec.to_csv(out_path, sep = '\t', index=False, header=False)
 
 
-cluster_name = 'NGC_6405'
-gen_radec(cluster_name)
+with open('select.json') as f:
+    data = json.load(f)
+
+for cluster in data.keys():
+    gen_radec(cluster.replace(' ', '_'))
