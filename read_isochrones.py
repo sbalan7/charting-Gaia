@@ -21,7 +21,7 @@ def load_data(isochrone, cluster_name):
                          names=iso_headers)
     iso_df.drop(iso_df.tail(1).index, inplace=True)
     
-    clu_path = os.getcwd() + '/cluster_tsvs/' + cluster_name + '.tsv'
+    clu_path = os.getcwd() + '/cluster_tsvs/' + cluster_name.replace(' ', '_') + '.tsv'
     clu_headers = 'sentRA  sentDE   _r   _RAJ2000h _RAJ2000m _RAJ2000s   _DEJ2000h _DEJ2000m _DEJ2000s    RA_ICRS   e_RA   DE_ICRS  e_DE  Source   Plx    e_Plx   pmRA   e_pmRA   pmDE   e_pmDE   Dup   FG  e_FG    Gmag     e_Gmag FBP    e_FBP  BPmag   e_BPmag    FRP   e_FRP   RPmag     e_RPmag  BP-RP   RV   e_RV  Teff   AG   E(BP-RP) Rad  Lum  '.split()
 
     clu_df = pd.read_csv(clu_path,
@@ -31,41 +31,79 @@ def load_data(isochrone, cluster_name):
     
     return iso_df, clu_df
 
-def plot_isochrone(iso_df, clu_df, ag, bprp, d):
-    final_path = os.getcwd() + '/plots/' + cluster_name + '.png'
+def plot_isochrone(iso_df, clu_df, x_tup, y_tup, d, diff_corr, cluster_name):
+
+    def update_annot(ind):
+        pos = sc.get_offsets()[ind["ind"][0]]
+        annot.xy = pos
+        text = "it works"
+        annot.set_text(text)
+        annot.get_bbox_patch().set_facecolor('white')
+        annot.get_bbox_patch().set_alpha(0.4)
+
+    def hover(event):
+        vis = annot.get_visible()
+        if event.inaxes == ax:
+            cont, ind = sc.contains(event)
+            if cont:
+                update_annot(ind)
+                annot.set_visible(True)
+                fig.canvas.draw_idle()
+            else:
+                if vis:
+                    annot.set_visible(False)
+                    fig.canvas.draw_idle()
+
+    AG, g_corr = y_tup
+    BPRP, b_corr = x_tup
+
     Gmag = iso_df['Gmag']
     G_BPmag = iso_df['G_BPmag']
     G_RPmag = iso_df['G_RPmag']
     
     # Magnitude calculation
-    gmag = Gmag + (5 * np.log10(d)) - 5 + ag + 0.1
-    bprp = G_BPmag - G_RPmag + bprp + 0.05
+    gmag = Gmag + (5 * np.log10(d)) - 5 + AG + g_corr
+    bprp = G_BPmag - G_RPmag + BPRP + b_corr
     
     # Some missing sources in the data cause outliers, and are removed
     cleaned_clu = clu_df[(clu_df['Gmag'] < 90) & (clu_df['BP-RP'] < 90)]
     star_gmag = cleaned_clu['Gmag']
     star_bprp = cleaned_clu['BP-RP']
+    
+    x_wid = [np.mean(star_bprp.nsmallest(5))-0.5, np.mean(star_bprp.nlargest(5))+0.5]
+    y_wid = [np.mean(star_gmag.nsmallest(5))-0.5, np.mean(star_gmag.nlargest(5))+0.5]
 
-    gmag_binary = gmag - 0.752 
+    gmag_binary = gmag - diff_corr
+    
+    final_path = os.getcwd() + '/plots/tracks/' + cluster_name + '.png'
+    
     # Plot stars and isochrones
-    fig = plt.figure(figsize=(10, 6))
-    s = plt.scatter(star_bprp, star_gmag, color='red', marker='.')
+    fig, ax = plt.subplots(figsize=(12, 8))
+    sc = plt.scatter(star_bprp, star_gmag, color='red', marker='.')
     p = plt.plot(bprp, gmag, color='black', linewidth=1, label='Isochrone')
     p = plt.plot(bprp, gmag_binary, color='blue', linewidth=1, label='Binary Track')
-    plt.xlim([-1, 5])
-    plt.ylim([-1, 20])
 
-    ax = s.axes
-    ax.invert_yaxis()
-    ax.set_xlabel(r'$BP-RP$', fontsize=12)
-    ax.set_ylabel(r'$G_{mag}$', fontsize=12)
-    ax.set_title(f'Star Distribution in {cluster_name}')
-    ax.grid(True)
-    plt.label()
-    plt.savefig(final_path)
+    annot = ax.annotate("", xy=(0,0), xytext=(20,20),textcoords="offset points",
+                    bbox=dict(boxstyle="round", fc="w"),
+                    arrowprops=dict(arrowstyle="->"))
+    annot.set_visible(False)
+
+    plt.xlim(x_wid)
+    plt.ylim(y_wid)
+
+    ax_ = sc.axes
+    ax_.invert_yaxis()
+    ax_.set_xlabel(r'$BP-RP$', fontsize=12)
+    ax_.set_ylabel(r'$G_{mag}$', fontsize=12)
+    ax_.set_title(f'Star Distribution in {cluster_name}')
+    ax_.grid(True)
+    plt.legend()
+    fig.canvas.mpl_connect("motion_notify_event", hover)
+    plt.show()
+    #plt.savefig(final_path)
 
 # Findging the mean and median value of AG and E(BP-RP)
-def find_ag_e_bprp(clu_df, show_plot='n'):
+def find_ag_e_bprp(clu_df, cluster_name, show_plot='n'):
     ag = clu_df[clu_df['AG'] <= 90]
     ag = ag['AG']
     ag_mean = ag.mean()
@@ -96,12 +134,13 @@ def find_ag_e_bprp(clu_df, show_plot='n'):
         
     return ag_median, bprp_median
 
-cluster_name = 'NGC_6405'
-isochrone = '0.1gy'
 
 for cluster_name, subdata in data.items():
     d = int(subdata['distance'])
     isochrone = subdata['isochrone']
     iso_df, clu_df = load_data(isochrone, cluster_name)
-    ag, bprp = find_ag_e_bprp(clu_df)
-    plot_isochrone(iso_df, clu_df, ag, bprp, d)
+    ag, bprp = find_ag_e_bprp(clu_df, cluster_name)
+    x_tup = (bprp, float(subdata['b_corr']))
+    y_tup = (ag, float(subdata['g_corr']))
+    diff_corr = float(subdata['diff_corr'])
+    plot_isochrone(iso_df, clu_df, x_tup, y_tup, d, diff_corr, cluster_name)
