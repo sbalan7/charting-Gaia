@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+import mplcursors
 import json
+import sys
 import os
 
 with open('select.json') as f:
@@ -10,8 +12,8 @@ with open('select.json') as f:
 pd.set_option('display.max_columns', None)
 
 # Load the isochrone and cluster data downloaded
-def load_data(isochrone, cluster_name):
-    iso_path = os.getcwd() + '/isochrones/' + isochrone + '.dat'
+def load_data(cluster_name):
+    iso_path = os.getcwd() + '/isochrones/' + cluster_name.replace(' ', '_') + '.dat'
     iso_headers = 'Zini     MH   logAge Mini        int_IMF         Mass   logL    logTe  logg  label   McoreTP C_O  period0  period1  period2  period3  period4  pmode  Mloss  tau1m   X   Y   Xc  Xn  Xo  Cexcess  Z 	 mbolmag  Gmag    G_BPmag  G_RPmag'.split()
     
     iso_df = pd.read_csv(iso_path,
@@ -31,31 +33,16 @@ def load_data(isochrone, cluster_name):
     
     return iso_df, clu_df
 
-def plot_isochrone(iso_df, clu_df, x_tup, y_tup, d, diff_corr, cluster_name):
-
-    def update_annot(ind):
-        pos = sc.get_offsets()[ind["ind"][0]]
-        annot.xy = pos
-        text = "it works"
-        annot.set_text(text)
-        annot.get_bbox_patch().set_facecolor('white')
-        annot.get_bbox_patch().set_alpha(0.4)
-
-    def hover(event):
-        vis = annot.get_visible()
-        if event.inaxes == ax:
-            cont, ind = sc.contains(event)
-            if cont:
-                update_annot(ind)
-                annot.set_visible(True)
-                fig.canvas.draw_idle()
-            else:
-                if vis:
-                    annot.set_visible(False)
-                    fig.canvas.draw_idle()
-
-    AG, g_corr = y_tup
-    BPRP, b_corr = x_tup
+def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save'):
+    def text(sel):
+        row = cleaned_clu[(cleaned_clu['Gmag'] == sel.target[1]) & (cleaned_clu['BP-RP'] == sel.target[0])]
+        try:
+            t = f"RA: {float(row['sentRA'])}\nDE: {float(row['sentDE'])}\nGmag: {float(row['Gmag'])}\nBP-RP: {float(row['BP-RP'])}"
+        except TypeError:
+            pass
+        return t
+    
+    AG, g_corr, BPRP, b_corr, diff_corr = tup
 
     Gmag = iso_df['Gmag']
     G_BPmag = iso_df['G_BPmag']
@@ -75,19 +62,12 @@ def plot_isochrone(iso_df, clu_df, x_tup, y_tup, d, diff_corr, cluster_name):
 
     gmag_binary = gmag - diff_corr
     
-    final_path = os.getcwd() + '/plots/tracks/' + cluster_name + '.png'
-    
     # Plot stars and isochrones
     fig, ax = plt.subplots(figsize=(12, 8))
-    sc = plt.scatter(star_bprp, star_gmag, color='red', marker='.')
+    sc = plt.scatter(star_bprp, star_gmag, color='red', marker='.', alpha=0.7)
     p = plt.plot(bprp, gmag, color='black', linewidth=1, label='Isochrone')
     p = plt.plot(bprp, gmag_binary, color='blue', linewidth=1, label='Binary Track')
-
-    annot = ax.annotate("", xy=(0,0), xytext=(20,20),textcoords="offset points",
-                    bbox=dict(boxstyle="round", fc="w"),
-                    arrowprops=dict(arrowstyle="->"))
-    annot.set_visible(False)
-
+    
     plt.xlim(x_wid)
     plt.ylim(y_wid)
 
@@ -98,9 +78,20 @@ def plot_isochrone(iso_df, clu_df, x_tup, y_tup, d, diff_corr, cluster_name):
     ax_.set_title(f'Star Distribution in {cluster_name}')
     ax_.grid(True)
     plt.legend()
-    fig.canvas.mpl_connect("motion_notify_event", hover)
-    plt.show()
-    #plt.savefig(final_path)
+
+    if say_what == 'show':
+        crs = mplcursors.cursor(ax,hover=True)
+        @crs.connect("add")
+        def _(sel):
+            sel.annotation.get_bbox_patch().set(fc="white", alpha=1)
+
+        crs.connect("add", lambda sel: sel.annotation.set_text(
+            '{}'.format(text(sel))))
+        
+        plt.show()
+    elif say_what == 'save':
+        final_path = os.getcwd() + '/plots/tracks/' + cluster_name + '.png'
+        plt.savefig(final_path)
 
 # Findging the mean and median value of AG and E(BP-RP)
 def find_ag_e_bprp(clu_df, cluster_name, show_plot='n'):
@@ -137,10 +128,10 @@ def find_ag_e_bprp(clu_df, cluster_name, show_plot='n'):
 
 for cluster_name, subdata in data.items():
     d = int(subdata['distance'])
-    isochrone = subdata['isochrone']
-    iso_df, clu_df = load_data(isochrone, cluster_name)
+    iso_df, clu_df = load_data(cluster_name)
     ag, bprp = find_ag_e_bprp(clu_df, cluster_name)
-    x_tup = (bprp, float(subdata['b_corr']))
-    y_tup = (ag, float(subdata['g_corr']))
-    diff_corr = float(subdata['diff_corr'])
-    plot_isochrone(iso_df, clu_df, x_tup, y_tup, d, diff_corr, cluster_name)
+    tup = (ag, float(subdata['g_corr']), bprp, float(subdata['b_corr']), float(subdata['diff_corr']))
+    if len(sys.argv) > 1:
+        plot_isochrone(iso_df, clu_df, tup, d, cluster_name, sys.argv[1])
+    else:
+        plot_isochrone(iso_df, clu_df, tup, d, cluster_name)
