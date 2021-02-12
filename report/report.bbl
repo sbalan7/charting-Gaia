@@ -2,8 +2,8 @@
 
 \bibitem{gaia}
 Gaia~Collaboration et. al.
-\newblock Description of the gaia mission (spacecraft, instruments, survey and
-  measurement principles, and operations), 2016.
+\newblock {Description of the Gaia mission (spacecraft, instruments, survey and
+  measurement principles, and operations)}, 2016.
 
 \bibitem{gaiafaccs}
 ESA.
@@ -12,12 +12,27 @@ ESA.
 
 \bibitem{gaiadr1}
 Gaia~Collaboration et. al.
-\newblock Summary description of gaia dr1, 2016.
+\newblock {Summary description of Gaia DR1}, 2016.
 
 \bibitem{gaiadr2}
 Gaia~Collaboration et. al.
-\newblock Gaia data release 2 : Summary of the contents and survey properties,
-  2018.
+\newblock {Gaia Data Release 2 : Summary of the contents and survey
+  properties}, 2018.
+
+\bibitem{globclust}
+Jon Talpur.
+\newblock A guide to globular clusters.
+\newblock 1997.
+
+\bibitem{introstars}
+Simon~F. Green, Mark~H. Jones, and S.~Jocelyn Burnell.
+\newblock {\em An Introduction to the Sun and Stars}.
+\newblock 2004.
+
+\bibitem{openclust}
+Christine Frommert, Hartmut;~Kronberg.
+\newblock Open star clusters.
+\newblock 2008.
 
 \bibitem{cg}
 T.~Cantat-Gaudin et. al.
@@ -30,8 +45,8 @@ Ochsenbein~F. et. al.
 
 \bibitem{gaiaerror}
 Gaia~Collaboration et. al.
-\newblock Gaia dr2 primer: Everything you wish you had known before you started
-  working with gaia data release 2.
+\newblock {Gaia DR2 primer: Everything you wish you had known before you
+  started working with Gaia Data Release 2}.
 \newblock 2019.
 
 \bibitem{q1}
