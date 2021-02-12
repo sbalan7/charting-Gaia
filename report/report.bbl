@@ -1,0 +1,87 @@
+\begin{thebibliography}{10}
+
+\bibitem{gaia}
+Gaia~Collaboration et. al.
+\newblock Description of the gaia mission (spacecraft, instruments, survey and
+  measurement principles, and operations), 2016.
+
+\bibitem{gaiafaccs}
+ESA.
+\newblock {Gaia: fact sheet}.
+\newblock 2013.
+
+\bibitem{gaiadr1}
+Gaia~Collaboration et. al.
+\newblock Summary description of gaia dr1, 2016.
+
+\bibitem{gaiadr2}
+Gaia~Collaboration et. al.
+\newblock Gaia data release 2 : Summary of the contents and survey properties,
+  2018.
+
+\bibitem{cg}
+T.~Cantat-Gaudin et. al.
+\newblock {A Gaia DR2 view of the open cluster population in the Milky Way}.
+\newblock {\em A\&A}, 2018.
+
+\bibitem{vizier}
+Ochsenbein~F. et. al.
+\newblock {The VizieR database of astronomical catalogues}.
+
+\bibitem{gaiaerror}
+Gaia~Collaboration et. al.
+\newblock Gaia dr2 primer: Everything you wish you had known before you started
+  working with gaia data release 2.
+\newblock 2019.
+
+\bibitem{q1}
+Crowley et~al.
+\newblock On-orbit performance of the gaia ccds.
+\newblock 2016.
+
+\bibitem{q2}
+Arenou et~al.
+\newblock Catalogue validation.
+\newblock 2018.
+
+\bibitem{q3}
+Hambly et~al.
+\newblock Calibration and mitigation of electronic offset effects in gaia data.
+\newblock 2018.
+
+\bibitem{q4}
+Fabricius et~al.
+\newblock Pre-processing and source-list creation.
+\newblock 2016.
+
+\bibitem{q5}
+Lindegren et~al.
+\newblock The astrometric solution.
+\newblock 2018.
+
+\bibitem{q6}
+Riello et~al.
+\newblock Processing of the photometric data.
+\newblock 2018.
+
+\bibitem{q7}
+Katz et~al.
+\newblock Properties and validation of the radial velocities.
+\newblock 2018.
+
+\bibitem{q8}
+Salgado et~al.
+\newblock Gaia archive data access facilities.
+\newblock 2017.
+
+\bibitem{q9}
+Moitinho et~al.
+\newblock Gaia archive visualisation services.
+\newblock 2018.
+
+\bibitem{q10}
+Luri et~al.
+\newblock On the use of gaia parallaxes.
+\newblock 2018.
+
+\end{thebibliography}

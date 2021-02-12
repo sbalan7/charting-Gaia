@@ -33,9 +33,12 @@ def load_data(cluster_name):
     
     return iso_df, clu_df
 
-def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save'):
+def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save', w=False):
     def text(sel):
         row = cleaned_clu[(cleaned_clu['Gmag'] == sel.target[1]) & (cleaned_clu['BP-RP'] == sel.target[0])]
+        if w:
+            f.write(row.to_string(header=False, index=False))
+            f.write('\n')
         try:
             t = f"RA: {float(row['sentRA'])}\nDE: {float(row['sentDE'])}\nGmag: {float(row['Gmag'])}\nBP-RP: {float(row['BP-RP'])}"
         except TypeError:
@@ -43,10 +46,12 @@ def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save'):
         return t
     
     AG, g_corr, BPRP, b_corr, diff_corr = tup
-
-    Gmag = iso_df['Gmag']
-    G_BPmag = iso_df['G_BPmag']
-    G_RPmag = iso_df['G_RPmag']
+    
+    # Remove outliers in isochrone data
+    cleaned_iso = iso_df.loc[(iso_df['Gmag'] > -5) & (iso_df['Gmag'] < 20)]
+    Gmag = cleaned_iso['Gmag']
+    G_BPmag = cleaned_iso['G_BPmag']
+    G_RPmag = cleaned_iso['G_RPmag']
     
     # Magnitude calculation
     gmag = Gmag + (5 * np.log10(d)) - 5 + AG + g_corr
@@ -61,10 +66,15 @@ def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save'):
     y_wid = [np.mean(star_gmag.nsmallest(5))-0.5, np.mean(star_gmag.nlargest(5))+0.5]
 
     gmag_binary = gmag - diff_corr
+
+    is_binary = [np.interp(x, bprp, gmag) for x in star_bprp] > star_gmag
+    #print(is_binary)
+    #print(list(zip(list(bprp), list(gmag))))
     
     # Plot stars and isochrones
     fig, ax = plt.subplots(figsize=(12, 8))
-    sc = plt.scatter(star_bprp, star_gmag, color='red', marker='.', alpha=0.7)
+    #sc = plt.scatter(star_bprp[~is_binary], star_gmag[~is_binary], color='#e38181', er='.', alpha=0.6)
+    #sc_ = plt.scatter(star_bprp[is_binary], star_gmag[is_binary], color='#34f434', marker='.', alpha=0.6)
     p = plt.plot(bprp, gmag, color='black', linewidth=1, label='Isochrone')
     p = plt.plot(bprp, gmag_binary, color='blue', linewidth=1, label='Binary Track')
     
@@ -84,14 +94,13 @@ def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save'):
         @crs.connect("add")
         def _(sel):
             sel.annotation.get_bbox_patch().set(fc="white", alpha=1)
-
         crs.connect("add", lambda sel: sel.annotation.set_text(
-            '{}'.format(text(sel))))
-        
+            '{}'.format(text(sel, w))))
         plt.show()
     elif say_what == 'save':
         final_path = os.getcwd() + '/plots/tracks/' + cluster_name + '.png'
         plt.savefig(final_path)
+
 
 # Findging the mean and median value of AG and E(BP-RP)
 def find_ag_e_bprp(clu_df, cluster_name, show_plot='n'):
@@ -127,11 +136,19 @@ def find_ag_e_bprp(clu_df, cluster_name, show_plot='n'):
 
 
 for cluster_name, subdata in data.items():
+    if len(sys.argv) > 2:
+        binary_path = os.getcwd() + '/binaries/' + cluster_name+'_binaries.txt'
+        f = open(binary_path, 'a')
+        w = True
     d = int(subdata['distance'])
     iso_df, clu_df = load_data(cluster_name)
     ag, bprp = find_ag_e_bprp(clu_df, cluster_name)
     tup = (ag, float(subdata['g_corr']), bprp, float(subdata['b_corr']), float(subdata['diff_corr']))
     if len(sys.argv) > 1:
         plot_isochrone(iso_df, clu_df, tup, d, cluster_name, sys.argv[1])
+    elif len(sys.argv) > 2:
+        plot_isochrone(iso_df, clu_df, tup, d, cluster_name, sys.argv[1], w)
     else:
         plot_isochrone(iso_df, clu_df, tup, d, cluster_name)
+    if len(sys.argv) > 2:        
+        f.close()

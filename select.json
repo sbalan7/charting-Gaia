@@ -18,9 +18,9 @@
     "NGC 752": {
         "isochrone": "2gy",
         "distance": "452",
-        "g_corr": "-0.12",
-        "b_corr": "-0.08",
-        "diff_corr": "0.5",
+        "g_corr": "-0.32",
+        "b_corr": "-0.1",
+        "diff_corr": "0.45",
         "metallicity": "-0.08"
     },
     "NGC 1664": {
