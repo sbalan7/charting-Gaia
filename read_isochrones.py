@@ -36,9 +36,8 @@ def load_data(cluster_name):
 def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save', w=False):
     def text(sel, w):
         row = cleaned_clu[(cleaned_clu['Gmag'] == sel.target[1]) & (cleaned_clu['BP-RP'] == sel.target[0])]
-        row['Source'] = row['Source'].astype(int)
         if w:
-            f.write(row.to_string(header=False, index=False))
+            f.write(row['Source'].astype(int))
             f.write('\n')
         try:
             t = f"Source: {int(row['Source'])}\nRA: {float(row['sentRA'])}\nDE: {float(row['sentDE'])}"

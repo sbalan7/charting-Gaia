@@ -7,7 +7,7 @@ import os
 with open('select.json') as f:
     data = json.load(f)
 
-#pd.set_option('display.max_columns', None)
+pd.set_option('display.max_columns', None)
 
 # Load the cluster data downloaded
 def load_data(cluster_name):
@@ -21,7 +21,7 @@ def load_data(cluster_name):
     
     clu_bin_path = os.getcwd() + '/binaries/' + cluster_name + '_binaries.txt'
     
-    clu_bin_df = pd.read_csv(clu_path,
+    clu_bin_df = pd.read_csv(clu_bin_path,
                              sep='\s+',
                              names=clu_headers).drop_duplicates()
     
@@ -36,13 +36,17 @@ def calculate_dists(clu_df, centerRA, centerDE):
     
 def get_singles(clu_df, clu_bin_df):
     clu_bin_df['Source'] = clu_bin_df['Source'].astype(str).astype(int)
-    clu_df = pd.merge(clu_df, clu_bin_df, how = 'outer', on = ['Source'], indicator=True)
-    print(clu_df)
+    clu_df['Source'] = clu_df['Source'].astype(int)
+    clu_df = pd.merge(clu_df, clu_bin_df['Source'], how = 'outer', on = ['Source'], indicator=True)
+    d={"left_only":"Binary", "right_only":"WUT","both":"Single"}
+    clu_df['Type'] = clu_df['_merge'].map(d)
+    clu_df = clu_df.drop(['_merge'], axis=1)
+    return clu_df
 
 for cluster_name, subdata in data.items():
     centerRA = float(subdata['centerRA'])
     centerDE = float(subdata['centerDE'])
     clu_df, clu_bin_df = load_data(cluster_name)
     clu_df = calculate_dists(clu_df, centerRA, centerDE)
-    get_singles(clu_df, clu_bin_df)
+    clu_df = get_singles(clu_df, clu_bin_df)
     
