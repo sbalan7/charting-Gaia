@@ -34,7 +34,7 @@ def load_data(cluster_name):
     return iso_df, clu_df
 
 def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save', w=False):
-    def text(sel):
+    def text(sel, w):
         row = cleaned_clu[(cleaned_clu['Gmag'] == sel.target[1]) & (cleaned_clu['BP-RP'] == sel.target[0])]
         if w:
             f.write(row.to_string(header=False, index=False))
@@ -42,7 +42,8 @@ def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save', w=Fals
         try:
             t = f"RA: {float(row['sentRA'])}\nDE: {float(row['sentDE'])}\nGmag: {float(row['Gmag'])}\nBP-RP: {float(row['BP-RP'])}"
         except TypeError:
-            pass
+            t = f"RA: nan\nDE: nan\nGmag: nan\nBP-RP: nan"
+        print(t)
         return t
     
     AG, g_corr, BPRP, b_corr, diff_corr = tup
@@ -66,9 +67,10 @@ def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save', w=Fals
     y_wid = [np.mean(star_gmag.nsmallest(5))-0.5, np.mean(star_gmag.nlargest(5))+0.5]
 
     gmag_binary = gmag - diff_corr
-    
+
     # Plot stars and isochrones
     fig, ax = plt.subplots(figsize=(12, 8))
+    sc = plt.scatter(star_bprp, star_gmag, color='red', marker='.', alpha=0.6)
     p = plt.plot(bprp, gmag, color='black', linewidth=1, label='Isochrone')
     p = plt.plot(bprp, gmag_binary, color='blue', linewidth=1, label='Binary Track')
     
@@ -132,7 +134,7 @@ def find_ag_e_bprp(clu_df, cluster_name, show_plot='n'):
 for cluster_name, subdata in data.items():
     if len(sys.argv) > 2:
         binary_path = os.getcwd() + '/binaries/' + cluster_name+'_binaries.txt'
-        f = open(binary_path, 'a')
+        f = open(binary_path, 'w')
         w = True
     d = int(subdata['distance'])
     iso_df, clu_df = load_data(cluster_name)
