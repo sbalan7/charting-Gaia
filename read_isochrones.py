@@ -36,14 +36,16 @@ def load_data(cluster_name):
 def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save', w=False):
     def text(sel, w):
         row = cleaned_clu[(cleaned_clu['Gmag'] == sel.target[1]) & (cleaned_clu['BP-RP'] == sel.target[0])]
+        row['Source'] = row['Source'].astype(int)
         if w:
             f.write(row.to_string(header=False, index=False))
             f.write('\n')
         try:
-            t = f"RA: {float(row['sentRA'])}\nDE: {float(row['sentDE'])}\nGmag: {float(row['Gmag'])}\nBP-RP: {float(row['BP-RP'])}"
+            t = f"Source: {int(row['Source'])}\nRA: {float(row['sentRA'])}\nDE: {float(row['sentDE'])}"
         except TypeError:
-            t = f"RA: nan\nDE: nan\nGmag: nan\nBP-RP: nan"
+            t = f"Source: nan\nRA: nan\nDE: nan"
         print(t)
+        print(row.to_string(header=False, index=False))
         return t
     
     AG, g_corr, BPRP, b_corr, diff_corr = tup
