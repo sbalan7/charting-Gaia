@@ -144,10 +144,10 @@ for cluster_name, subdata in data.items():
     iso_df, clu_df = load_data(cluster_name)
     ag, bprp = find_ag_e_bprp(clu_df, cluster_name)
     tup = (ag, float(subdata['g_corr']), bprp, float(subdata['b_corr']), float(subdata['diff_corr']))
-    if len(sys.argv) > 1:
-        plot_isochrone(iso_df, clu_df, tup, d, cluster_name, sys.argv[1])
-    elif len(sys.argv) > 2:
+    if len(sys.argv) > 2:
         plot_isochrone(iso_df, clu_df, tup, d, cluster_name, sys.argv[1], w)
+    elif len(sys.argv) > 1:
+        plot_isochrone(iso_df, clu_df, tup, d, cluster_name, sys.argv[1])
     else:
         plot_isochrone(iso_df, clu_df, tup, d, cluster_name)
     if len(sys.argv) > 2:        
