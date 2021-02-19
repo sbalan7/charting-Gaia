@@ -66,15 +66,9 @@ def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save', w=Fals
     y_wid = [np.mean(star_gmag.nsmallest(5))-0.5, np.mean(star_gmag.nlargest(5))+0.5]
 
     gmag_binary = gmag - diff_corr
-
-    is_binary = [np.interp(x, bprp, gmag) for x in star_bprp] > star_gmag
-    #print(is_binary)
-    #print(list(zip(list(bprp), list(gmag))))
     
     # Plot stars and isochrones
     fig, ax = plt.subplots(figsize=(12, 8))
-    #sc = plt.scatter(star_bprp[~is_binary], star_gmag[~is_binary], color='#e38181', er='.', alpha=0.6)
-    #sc_ = plt.scatter(star_bprp[is_binary], star_gmag[is_binary], color='#34f434', marker='.', alpha=0.6)
     p = plt.plot(bprp, gmag, color='black', linewidth=1, label='Isochrone')
     p = plt.plot(bprp, gmag_binary, color='blue', linewidth=1, label='Binary Track')
     
