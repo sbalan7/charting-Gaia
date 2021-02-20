@@ -38,10 +38,25 @@ def get_singles(clu_df, clu_bin_df):
     clu_bin_df['Source'] = clu_bin_df['Source'].astype(str).astype(int)
     clu_df['Source'] = clu_df['Source'].astype(int)
     clu_df = pd.merge(clu_df, clu_bin_df['Source'], how = 'outer', on = ['Source'], indicator=True)
-    d={"left_only":"Binary", "right_only":"WUT","both":"Single"}
+    d={"left_only":"Binary", "right_only":"WUT", "both":"Single"}
     clu_df['Type'] = clu_df['_merge'].map(d)
     clu_df = clu_df.drop(['_merge'], axis=1)
     return clu_df
+
+def plot_radial_dist(clu_df):
+    rad_path = os.getcwd() + '/plots/radial_dist/' + cluster_name + '_rad.png'
+    bin_df = clu_df[clu_df['Type'] == 'Binary'].sort_values('Rad_Dist')
+    sin_df = clu_df[clu_df['Type'] == 'Single'].sort_values('Rad_Dist')
+    plt.step(sin_df['Rad_Dist'], np.arange(sin_df['Rad_Dist'].size)/sin_df['Rad_Dist'].size, label='Single Stars')
+    plt.step(bin_df['Rad_Dist'], np.arange(bin_df['Rad_Dist'].size)/bin_df['Rad_Dist'].size, label='Binary Stars')
+    
+    plt.title(f'Radial Dist for {cluster_name}')
+    plt.xlabel('Radial Distance (arcmin)')
+    plt.ylabel('% of stars')
+    plt.legend()
+    plt.savefig(rad_path)
+    plt.clf()
+    
 
 for cluster_name, subdata in data.items():
     centerRA = float(subdata['centerRA'])
@@ -49,4 +64,5 @@ for cluster_name, subdata in data.items():
     clu_df, clu_bin_df = load_data(cluster_name)
     clu_df = calculate_dists(clu_df, centerRA, centerDE)
     clu_df = get_singles(clu_df, clu_bin_df)
+    plot_radial_dist(clu_df)
     
