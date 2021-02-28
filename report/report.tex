@@ -7,10 +7,15 @@
 \usepackage{setspace}
 \usepackage[top=1in,bottom=1in,left=2cm,right=2cm]{geometry}
 \usepackage{graphicx}\graphicspath{{imgs/}}
+\usepackage{float}
 \usepackage{subcaption}
-\usepackage[sort&compress]{natbib}
+\usepackage[super,comma,sort&compress]{natbib}
 \usepackage[hidelinks]{hyperref}
 \usepackage{indentfirst}
+
+\usepackage{lmodern}
+\usepackage{cmbright}
+\renewcommand{\familydefault}{\sfdefault}
 
 \usepackage{titlesec}
 \usepackage{lipsum}
@@ -31,6 +36,11 @@
 
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
+
+\usepackage{multicol}
+
+\renewcommand{\bibpreamble}{\begin{multicols}{2}}
+\renewcommand{\bibpostamble}{\end{multicols}}
 
 \title{A Study of Properties of Open Star Clusters}
 \author{Shanmugha Balan S V \\ 2019B5A30571P \\[1cm]\\{\small Advisor: Dr Kaushar Vaidya}\\[1cm]}
