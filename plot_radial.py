@@ -34,13 +34,15 @@ def calculate_dists(clu_df, centerRA, centerDE):
     clu_df['Rad_Dist'] = 60 * np.sqrt(clu_df['del_RA']**2 + clu_df['del_DE']**2)
     return clu_df
     
-def get_singles(clu_df, clu_bin_df):
+def get_singles(clu_df, clu_bin_df, cluster_name):
     clu_bin_df['Source'] = clu_bin_df['Source'].astype(str).astype(int)
     clu_df['Source'] = clu_df['Source'].astype(int)
     clu_df = pd.merge(clu_df, clu_bin_df['Source'], how = 'outer', on = ['Source'], indicator=True)
     d={"left_only":"Binary", "right_only":"WUT", "both":"Single"}
     clu_df['Type'] = clu_df['_merge'].map(d)
     clu_df = clu_df.drop(['_merge'], axis=1)
+    path = os.getcwd() + '/clusters/' + cluster_name.replace(' ', '_') + '.csv'
+    clu_df.to_csv(path)
     return clu_df
 
 def plot_radial_dist(clu_df):
@@ -63,6 +65,6 @@ for cluster_name, subdata in data.items():
     centerDE = float(subdata['centerDE'])
     clu_df, clu_bin_df = load_data(cluster_name)
     clu_df = calculate_dists(clu_df, centerRA, centerDE)
-    clu_df = get_singles(clu_df, clu_bin_df)
+    clu_df = get_singles(clu_df, clu_bin_df, cluster_name)
     plot_radial_dist(clu_df)
     
