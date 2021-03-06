@@ -7,7 +7,7 @@ Gaia~Collaboration et. al.
 
 \bibitem{gaiafaccs}
 ESA.
-\newblock {Gaia: fact sheet}.
+\newblock Gaia: fact sheet.
 \newblock 2013.
 
 \bibitem{gaiadr1}
@@ -47,60 +47,18 @@ Ochsenbein~F. et. al.
 Wiki~Education Foundation.
 \newblock {Wikimedia Commons}.
 
+\bibitem{cmdSite}
+Léo Girardi.
+\newblock {CMD Interface for stellar isochrones}, 2008.
+
+\bibitem{webda}
+Ernst Paunzen, Christian Stütz, and Jan Janik.
+\newblock {WEBDA Database}, 2008.
+
 \bibitem{gaiaerror}
 Gaia~Collaboration et. al.
 \newblock {Gaia DR2 primer: Everything you wish you had known before you
   started working with Gaia Data Release 2}.
 \newblock 2019.
-
-\bibitem{q1}
-Crowley et~al.
-\newblock On-orbit performance of the gaia ccds.
-\newblock 2016.
-
-\bibitem{q2}
-Arenou et~al.
-\newblock Catalogue validation.
-\newblock 2018.
-
-\bibitem{q3}
-Hambly et~al.
-\newblock Calibration and mitigation of electronic offset effects in gaia data.
-\newblock 2018.
-
-\bibitem{q4}
-Fabricius et~al.
-\newblock Pre-processing and source-list creation.
-\newblock 2016.
-
-\bibitem{q5}
-Lindegren et~al.
-\newblock The astrometric solution.
-\newblock 2018.
-
-\bibitem{q6}
-Riello et~al.
-\newblock Processing of the photometric data.
-\newblock 2018.
-
-\bibitem{q7}
-Katz et~al.
-\newblock Properties and validation of the radial velocities.
-\newblock 2018.
-
-\bibitem{q8}
-Salgado et~al.
-\newblock Gaia archive data access facilities.
-\newblock 2017.
-
-\bibitem{q9}
-Moitinho et~al.
-\newblock Gaia archive visualisation services.
-\newblock 2018.
-
-\bibitem{q10}
-Luri et~al.
-\newblock On the use of gaia parallaxes.
-\newblock 2018.
 
 \end{thebibliography}

@@ -1,5 +1,5 @@
 
-\documentclass[12pt,a4paper,twoside,openright]{report}
+\documentclass[12pt,a4paper,oneside,openright]{report}
 
 \usepackage[T1]{fontenc}
 \usepackage{mathptmx}
@@ -26,7 +26,7 @@
 \usepackage{fancyhdr} 
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[RE]{\it{\nouppercase{\leftmark}}}
+\fancyhead[R]{\it{\nouppercase{\leftmark}}}
 \fancyhead[LO]{\it{\nouppercase{\rightmark}}}
 \fancyhead[LE,RO]{\thepage}
 \fancyfoot{}
@@ -34,8 +34,8 @@
 \usepackage{emptypage}
 \usepackage[nottoc]{tocbibind}
 
-\setcounter{secnumdepth}{3}
-\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{1}
 
 \usepackage{multicol}
 
@@ -55,6 +55,10 @@
 \maketitle	
 \cleardoublepage
 
+\newpage 
+\ % The empty page
+\newpage
+
 \singlespacing
 \pagenumbering{roman}
 \pagestyle{plain}
@@ -64,11 +68,20 @@ Gaia is an astrometry mission by the ESA, which has helped in cataloguing numero
 \end{abstract}	
 
 \cleardoublepage
-\pagestyle{fancy}
-	
+
+\newpage 
+\ % The empty page
+\newpage
+
 \tableofcontents
 
 \cleardoublepage
+
+\newpage 
+\ % The empty page
+\newpage
+
+\pagestyle{fancy}
 \singlespacing
 \pagenumbering{arabic}	
 
@@ -79,7 +92,7 @@ Gaia is an astrometry mission by the ESA, which has helped in cataloguing numero
 
 \nocite{*}
 \bibliographystyle{unsrt}	
-\bibliography{mybib}
+\bibliography{bibliography}
 	
 \end{document}
 

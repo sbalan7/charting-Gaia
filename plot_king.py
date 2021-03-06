@@ -49,9 +49,11 @@ def plot_kings_profile(counts, base_r):
     log_surf_d = np.log10(counts)-2*log_radii
     log_surf_d = [_-np.log10(np.pi) for _ in log_surf_d]
     plt.plot(log_surf_d, log_radii, marker='.')
+    plt.xlabel('log(radii)')
+    plt.ylabel('log(surface density)')
     plt.show()
 
 cluster_name = 'NGC_2287'
-counts, base_r = bin_stars(25, cluster_name)
+counts, base_r = bin_stars(22, cluster_name)
 plot_kings_profile(counts, base_r)
 
