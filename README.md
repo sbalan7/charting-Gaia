@@ -9,10 +9,10 @@ The data from WEBDA is then also used to download parsec isochrones from the CMD
 The `/report/` directory has the tex files and bib files used to generate the project report where a more detailed overview of the project is given. The BibTeX distribution is used for LaTeX.
 
 ### Dependencies for the code:
-> Python 3.8.5
-> astropy 4.2
-> matplotlib 3.3.3
-> numpy 1.19.4
-> pandas 1.2.1
-> scikit-learn 0.24.0
+* python 3.8.5
+* astropy 4.2
+* matplotlib 3.3.3
+* numpy 1.19.4
+* pandas 1.2.1
+* scikit-learn 0.24.0
 
