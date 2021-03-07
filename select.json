@@ -1,11 +1,11 @@
 {
     "IC 4651": {
-        "isochrone": "1.14gy",
+        "isochrone": "1.7gy",
         "distance": "888",
         "g_corr": "0.83",
         "b_corr": "0.13",
         "diff_corr": "0.5",
-        "metallicity": "0.1",
+        "metallicity": "0.077",
         "centerRA": 261.2114550816277,
         "centerDE": -49.91465504545252
     },
@@ -20,12 +20,12 @@
         "centerDE": 5.440302118440128
     },
     "NGC 752": {
-        "isochrone": "2gy",
+        "isochrone": "1.45gy",
         "distance": "452",
         "g_corr": "-0.32",
         "b_corr": "-0.1",
         "diff_corr": "0.45",
-        "metallicity": "-0.08",
+        "metallicity": "-0.01",
         "centerRA": 29.23498030735206,
         "centerDE": 37.777784724146635
     },
@@ -80,12 +80,12 @@
         "centerDE": -37.94525857599842
     },
     "NGC 6405": {
-        "isochrone": "0.1gy",
+        "isochrone": "0.75gy",
         "distance": "487",
         "g_corr": "-0.1",
         "b_corr": "0",
         "diff_corr": "0.5",
-        "metallicity": "0.06",
+        "metallicity": "0.07",
         "centerRA": 265.0860819764067,
         "centerDE": -32.245693737981746
     },

@@ -49,7 +49,7 @@ def plot_kings_profile(counts, base_r):
     print(counts)
     print(base_r)
     amplitude = counts[0]/(np.pi*base_r*base_r)
-    r_c = 2.2
+    r_c = 2.16
     fig = plt.figure()
     ax = plt.gca()
 
@@ -66,6 +66,8 @@ def plot_kings_profile(counts, base_r):
         
         ax.set_yscale('log')
         ax.set_xscale('log')
+        ax.set_ylim([5e-3, 1e0])
+        ax.set_xlim([0.8, 10])
     
     plt.xlabel('log(radii)')
     plt.ylabel('log(surface density)')
