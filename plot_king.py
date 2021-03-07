@@ -1,17 +1,21 @@
+from astropy.modeling.models import KingProjectedAnalytic1D
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import json
 import os
+
+
 '''
 with open('select.json') as f:
     data = json.load(f)
 
 pd.set_option('display.max_columns', None)
 '''
+
 def load_data(cluster_name):
     clu_path = os.getcwd() + '/clusters/' + cluster_name.replace(' ', '_') + '.csv'
-    clu_headers = ['Index','sentRA','sentDE','_r','_RAJ2000h','_RAJ2000m','_RAJ2000s','_DEJ2000h','_DEJ2000m','_DEJ2000s','RA_ICRS','e_RA','DE_ICRS','e_DE','Source','Plx','e_Plx','pmRA','e_pmRA','pmDE','e_pmDE','Dup','FG','e_FG','Gmag','e_Gmag','FBP','e_FBP','BPmag','e_BPmag','FRP','e_FRP','RPmag','e_RPmag','BP-RP','RV','e_RV','Teff','AG','E(BP-RP)','Rad','Lum','del_RA','del_DE','Rad_Dist','Type']
+    clu_headers = ['sentRA', 'sentDE', '_r', '_RAJ2000h', '_RAJ2000m', '_RAJ2000s', '_DEJ2000h', '_DEJ2000m', '_DEJ2000s', 'RA_ICRS', 'e_RA', 'DE_ICRS', 'e_DE', 'Source', 'Plx', 'e_Plx', 'pmRA', 'e_pmRA', 'pmDE', 'e_pmDE', 'Dup', 'FG', 'e_FG', 'Gmag', 'e_Gmag', 'FBP', 'e_FBP', 'BPmag', 'e_BPmag', 'FRP', 'e_FRP', 'RPmag', 'e_RPmag', 'BP-RP', 'RV', 'e_RV', 'Teff', 'AG', 'E(BP-RP)', 'Rad', 'Lum', 'Rad_Dist', 'Type']
 
     clu_df = pd.read_csv(clu_path,
                          skiprows=1,
@@ -43,12 +47,26 @@ def bin_stars(bins, cluster_name):
 def plot_kings_profile(counts, base_r):
     bins = len(counts)
     print(counts)
-    radii = [np.sqrt(i+1)*base_r for i in range(bins)]
-    log_radii = np.log10(radii)
+    print(base_r)
+    amplitude = counts[0]/(np.pi*base_r*base_r)
+    r_c = 2.2
+    fig = plt.figure()
+    ax = plt.gca()
+
+    for r_t in [10]:
+        r = np.linspace(5e-3, r_t, 100)
+        kp = KingProjectedAnalytic1D(amplitude, r_c, r_t)
+        sig = kp(r)
+        
+        radii = np.array([np.sqrt(i+1)*base_r for i in range(bins)])
+        surf_d = counts / (radii*radii*np.pi)
     
-    log_surf_d = np.log10(counts)-2*log_radii
-    log_surf_d = [_-np.log10(np.pi) for _ in log_surf_d]
-    plt.plot(log_surf_d, log_radii, marker='.')
+        ax.plot(r, sig/sig[0])
+        ax.scatter(radii, surf_d, marker='.')
+        
+        ax.set_yscale('log')
+        ax.set_xscale('log')
+    
     plt.xlabel('log(radii)')
     plt.ylabel('log(surface density)')
     plt.show()

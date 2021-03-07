@@ -79,7 +79,7 @@ for cluster_name, subdata in data.items():
     clu_df = calculate_dists(center, clu_df)
     clu_df = get_singles(clu_df, clu_bin_df)
     plot_radial_dist(clu_df)
-    print(clu_df)
+    print(clu_df.columns)
     path = os.getcwd() + '/clusters/' + cluster_name.replace(' ', '_') + '.csv'
     clu_df.to_csv(path)
 
