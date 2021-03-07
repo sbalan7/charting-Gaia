@@ -1,1 +1,102 @@
-{"IC 4651": {"isochrone": "1.14gy", "distance": "888", "g_corr": "0.83", "b_corr": "0.13", "diff_corr": "0.5", "metallicity": "0.1", "centerRA": "261.2114550816276", "centerDE": "-49.91465504545262"}, "IC 4756": {"isochrone": "0.5gy", "distance": "484", "g_corr": "0.6", "b_corr": "0.1", "diff_corr": "0.5", "metallicity": "-0.06", "centerRA": "279.6445212179273", "centerDE": "5.440302118440131"}, "NGC 752": {"isochrone": "2gy", "distance": "452", "g_corr": "-0.32", "b_corr": "-0.1", "diff_corr": "0.45", "metallicity": "-0.08", "centerRA": "29.234980307352064", "centerDE": "37.77778472414665"}, "NGC 1664": {"isochrone": "0.3gy", "distance": "1199", "g_corr": "-0.05", "b_corr": "-0.05", "diff_corr": "0.5", "metallicity": "0.0152", "centerRA": "72.7599243627971", "centerDE": "43.67400075300173"}, "NGC 2281": {"isochrone": "0.35gy", "distance": "558", "g_corr": "0.04", "b_corr": "-0.02", "diff_corr": "0.5", "metallicity": "0.13", "centerRA": "102.07291037575786", "centerDE": "41.05564427105315"}, "NGC 2287": {"isochrone": "0.24gy", "distance": "693", "g_corr": "0.18", "b_corr": "-0.02", "diff_corr": "0.5", "metallicity": "0.04", "centerRA": "101.50894180156114", "centerDE": "-20.70579554131147"}, "NGC 2527": {"isochrone": "0.4gy", "distance": "601", "g_corr": "-0.12", "b_corr": "-0.1", "diff_corr": "0.5", "metallicity": "0.0152", "centerRA": "121.25353421988439", "centerDE": "-28.10607078207929"}, "NGC 6281": {"isochrone": "0.3gy", "distance": "479", "g_corr": "0.26", "b_corr": "0", "diff_corr": "0.5", "metallicity": "0.0152", "centerRA": "256.1755881615674", "centerDE": "-37.94525857599846"}, "NGC 6405": {"isochrone": "0.1gy", "distance": "487", "g_corr": "-0.1", "b_corr": "0", "diff_corr": "0.5", "metallicity": "0.06", "centerRA": "265.0860819764068", "centerDE": "-32.24569373798176"}, "NGC 6475": {"isochrone": "0.3gy", "distance": "301", "g_corr": "-0.1", "b_corr": "0", "diff_corr": "0.5", "metallicity": "0.0152", "centerRA": "268.5438874046654", "centerDE": "-34.87020914972172"}}
+{
+    "IC 4651": {
+        "isochrone": "1.14gy",
+        "distance": "888",
+        "g_corr": "0.83",
+        "b_corr": "0.13",
+        "diff_corr": "0.5",
+        "metallicity": "0.1",
+        "centerRA": 261.2114550816277,
+        "centerDE": -49.91465504545252
+    },
+    "IC 4756": {
+        "isochrone": "0.5gy",
+        "distance": "484",
+        "g_corr": "0.6",
+        "b_corr": "0.1",
+        "diff_corr": "0.5",
+        "metallicity": "-0.06",
+        "centerRA": 279.64452121792715,
+        "centerDE": 5.440302118440128
+    },
+    "NGC 752": {
+        "isochrone": "2gy",
+        "distance": "452",
+        "g_corr": "-0.32",
+        "b_corr": "-0.1",
+        "diff_corr": "0.45",
+        "metallicity": "-0.08",
+        "centerRA": 29.23498030735206,
+        "centerDE": 37.777784724146635
+    },
+    "NGC 1664": {
+        "isochrone": "0.3gy",
+        "distance": "1199",
+        "g_corr": "-0.05",
+        "b_corr": "-0.05",
+        "diff_corr": "0.5",
+        "metallicity": "0.0152",
+        "centerRA": 72.75992436279704,
+        "centerDE": 43.6740007530017
+    },
+    "NGC 2281": {
+        "isochrone": "0.35gy",
+        "distance": "558",
+        "g_corr": "0.04",
+        "b_corr": "-0.02",
+        "diff_corr": "0.5",
+        "metallicity": "0.13",
+        "centerRA": 102.07291037575784,
+        "centerDE": 41.05564427105314
+    },
+    "NGC 2287": {
+        "isochrone": "0.24gy",
+        "distance": "693",
+        "g_corr": "0.18",
+        "b_corr": "-0.02",
+        "diff_corr": "0.5",
+        "metallicity": "0.04",
+        "centerRA": 101.50894180156111,
+        "centerDE": -20.70579554131146
+    },
+    "NGC 2527": {
+        "isochrone": "0.4gy",
+        "distance": "601",
+        "g_corr": "-0.12",
+        "b_corr": "-0.1",
+        "diff_corr": "0.5",
+        "metallicity": "0.0152",
+        "centerRA": 121.25353421988439,
+        "centerDE": -28.10607078207928
+    },
+    "NGC 6281": {
+        "isochrone": "0.3gy",
+        "distance": "479",
+        "g_corr": "0.26",
+        "b_corr": "0",
+        "diff_corr": "0.5",
+        "metallicity": "0.0152",
+        "centerRA": 256.175588161567,
+        "centerDE": -37.94525857599842
+    },
+    "NGC 6405": {
+        "isochrone": "0.1gy",
+        "distance": "487",
+        "g_corr": "-0.1",
+        "b_corr": "0",
+        "diff_corr": "0.5",
+        "metallicity": "0.06",
+        "centerRA": 265.0860819764067,
+        "centerDE": -32.245693737981746
+    },
+    "NGC 6475": {
+        "isochrone": "0.3gy",
+        "distance": "301",
+        "g_corr": "-0.1",
+        "b_corr": "0",
+        "diff_corr": "0.5",
+        "metallicity": "0.0152",
+        "centerRA": 268.5438874046653,
+        "centerDE": -34.87020914972172
+    }
+}

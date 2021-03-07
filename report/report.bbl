@@ -55,10 +55,11 @@ Léo Girardi.
 Ernst Paunzen, Christian Stütz, and Jan Janik.
 \newblock {WEBDA Database}, 2008.
 
-\bibitem{gaiaerror}
-Gaia~Collaboration et. al.
-\newblock {Gaia DR2 primer: Everything you wish you had known before you
-  started working with Gaia Data Release 2}.
-\newblock 2019.
+\bibitem{scikit-learn}
+F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel,
+  M.~Blondel, P.~Prettenhofer, R.~Weiss, V.~Dubourg, J.~Vanderplas, A.~Passos,
+  D.~Cournapeau, M.~Brucher, M.~Perrot, and E.~Duchesnay.
+\newblock Scikit-learn: Machine learning in {P}ython.
+\newblock {\em Journal of Machine Learning Research}, 12:2825--2830, 2011.
 
 \end{thebibliography}
