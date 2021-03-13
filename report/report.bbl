@@ -62,6 +62,11 @@ F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel,
 \newblock Scikit-learn: Machine learning in {P}ython.
 \newblock {\em Journal of Machine Learning Research}, 12:2825--2830, 2011.
 
+\bibitem{kingprofile}
+Ivan King.
+\newblock {The Structure of Star Clusters. I. An Empirical Density Law}.
+\newblock {\em {The Astronomical Journal}}, 1962.
+
 \bibitem{astropy}
 {Astropy Collaboration} et. al.
 \newblock {Astropy: A community Python package for astronomy}.

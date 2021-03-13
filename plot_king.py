@@ -1,4 +1,5 @@
 from astropy.modeling.models import KingProjectedAnalytic1D
+from astropy.modeling.fitting import LinearLSQFitter
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -54,7 +55,8 @@ def plot_kings_profile(counts, base_r, cluster_name):
 
     for r_t in [85, 95, 105]:
         r = np.linspace(5e-3, r_t, 100)
-        kp = KingProjectedAnalytic1D(amplitude, r_c, r_t)
+        fit = LinearLSQFitter()
+        kp = KingProjectedAnalytic1D()
         sig = kp(r)
         
         radii = np.array([np.sqrt(i+1)*base_r for i in range(bins)])
