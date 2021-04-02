@@ -15,8 +15,6 @@ driver = webdriver.Firefox()
 
 for cluster, (age, met) in info.items():
     path = os.getcwd() + '/isochrones/' + cluster.replace(' ', '_') + '.dat'
-    if os.path.isfile(path) and len(sys.argv)>1:
-        continue
     driver.get("http://stev.oapd.inaf.it/cgi-bin/cmd_3.4")
     system_select = driver.find_element_by_xpath("/html/body/form/div/fieldset[2]/p/select/option[32]").click()
     in1 = driver.find_element_by_xpath("/html/body/form/div/fieldset[7]/table/tbody/tr[3]/td[2]/input")

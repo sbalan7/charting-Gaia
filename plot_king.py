@@ -1,6 +1,7 @@
 from astropy.modeling.models import KingProjectedAnalytic1D
 from astropy.modeling.fitting import LinearLSQFitter
 import matplotlib.pyplot as plt
+from utils import load_data
 import pandas as pd
 import numpy as np
 import json
@@ -14,18 +15,8 @@ with open('select.json') as f:
 pd.set_option('display.max_columns', None)
 '''
 
-def load_data(cluster_name):
-    clu_path = os.getcwd() + '/clusters/' + cluster_name.replace(' ', '_') + '.csv'
-    clu_headers = ['sentRA', 'sentDE', '_r', '_RAJ2000h', '_RAJ2000m', '_RAJ2000s', '_DEJ2000h', '_DEJ2000m', '_DEJ2000s', 'RA_ICRS', 'e_RA', 'DE_ICRS', 'e_DE', 'Source', 'Plx', 'e_Plx', 'pmRA', 'e_pmRA', 'pmDE', 'e_pmDE', 'Dup', 'FG', 'e_FG', 'Gmag', 'e_Gmag', 'FBP', 'e_FBP', 'BPmag', 'e_BPmag', 'FRP', 'e_FRP', 'RPmag', 'e_RPmag', 'BP-RP', 'RV', 'e_RV', 'Teff', 'AG', 'E(BP-RP)', 'Rad', 'Lum', 'Rad_Dist', 'Type']
-
-    clu_df = pd.read_csv(clu_path,
-                         skiprows=1,
-                         names=clu_headers)
-    
-    return clu_df
-
 def bin_stars(bins, cluster_name):
-    clu_df = load_data(cluster_name)
+    clu_df = load_data(cluster_name, iso=False)
     
     base_r = max(clu_df['Rad_Dist']) / np.sqrt(bins)
     

@@ -15,4 +15,5 @@ The `/report/` directory has the tex files and bib files used to generate the pr
 * numpy 1.19.4
 * pandas 1.2.1
 * scikit-learn 0.24.0
+* mplcursors 0.4
 
