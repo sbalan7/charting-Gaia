@@ -82,7 +82,7 @@ def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save', w=Fals
     ax_.invert_yaxis()
     ax_.set_xlabel(r'$BP-RP$', fontsize=12)
     ax_.set_ylabel(r'$G_{mag}$', fontsize=12)
-    ax_.set_title(f'Star Distribution in {cluster_name}')
+    ax_.set_title(f'Star Distribution in {cluster_name} \nAge {data[cluster_name]["isochrone"]}, Metallicity {data[cluster_name]["metallicity"]}')
     ax_.grid(True)
     plt.legend()
 
@@ -140,9 +140,10 @@ for cluster_name, subdata in data.items():
     
     d = int(subdata['distance'])
     iso_df, clu_df = load_data(cluster_name)
-    ag, bprp = find_ag_e_bprp(clu_df, cluster_name)
+    ag, bprp = subdata['AG'], subdata['E_BP-RP']
     tup = (ag, float(subdata['g_corr']), bprp, float(subdata['b_corr']), float(subdata['diff_corr']))
     
+
     if len(sys.argv) > 2:
         plot_isochrone(iso_df, clu_df, tup, d, cluster_name, sys.argv[1], w)
     elif len(sys.argv) > 1:
@@ -152,3 +153,6 @@ for cluster_name, subdata in data.items():
     
     if len(sys.argv) > 2:        
         f.close()
+
+with open('select.json', 'w') as f:
+    json.dump(data, f, indent=4)
