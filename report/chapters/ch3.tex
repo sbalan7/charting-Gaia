@@ -34,5 +34,7 @@ The King's profile\citep{kingprofile} is fitted for all the clusters in the stud
 $$f = k \left( \frac{r_c}{\sqrt{r^2+r_c^2}} - \frac{r_t}{\sqrt{r_c^2+r_t^2}} \right) ^2$$
 $k$ is an amplitude or a scaling factor, $r_c$ is the core radius and $r_t$ is the tidal radius. $k$ is simply the surface density of the innermost bin. $r_c$ and $r_t$ are the variable parameters which can be modified to get the best fit to the data. From the fitting procedure we can determine the core radius and tidal radius of the star cluster. The profile can be plotted easily with the \lstinline{astropy}\citep{astropy} module.
 
+\section{Determining Mass and Density}
+The mass of stars in the main sequence is strongly correlated with the magnitude of the stars. This relation can be found by fitting a polynomial to our data. \lstinline{numpy} {}  has a submodule for dealing with polynomials and the \lstinline{polyfit} {} will fit a polynomial to the given data. In this study, we attempted to fit a cubic polynomial to approximate the relationship between magnitude and mass. 
 
 

@@ -1,5 +1,5 @@
+from utils import load_data, plot_cmd
 import matplotlib.pyplot as plt
-from utils import load_data
 import pandas as pd
 import numpy as np
 import mplcursors
@@ -25,45 +25,9 @@ def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save', w=Fals
         print(t)
         print(row.to_string(header=False, index=False))
         return t
-    
-    AG, g_corr, BPRP, b_corr, diff_corr = tup
-    
-    # Remove outliers in isochrone data
-    cleaned_iso = iso_df.loc[(iso_df['Gmag'] > -5) & (iso_df['Gmag'] < 20)]
-    Gmag = cleaned_iso['Gmag']
-    G_BPmag = cleaned_iso['G_BPmag']
-    G_RPmag = cleaned_iso['G_RPmag']
-    
-    # Magnitude calculation
-    gmag = Gmag + (5 * np.log10(d)) - 5 + AG + g_corr
-    bprp = G_BPmag - G_RPmag + BPRP + b_corr
-    
-    # Some missing sources in the data cause outliers, and are removed
-    cleaned_clu = clu_df[(clu_df['Gmag'] < 90) & (clu_df['BP-RP'] < 90)]
-    star_gmag = cleaned_clu['Gmag']
-    star_bprp = cleaned_clu['BP-RP']
-    
-    x_wid = [np.mean(star_bprp.nsmallest(5))-0.5, np.mean(star_bprp.nlargest(5))+0.5]
-    y_wid = [np.mean(star_gmag.nsmallest(5))-0.5, np.mean(star_gmag.nlargest(5))+0.5]
 
-    gmag_binary = gmag - diff_corr
-
-    # Plot stars and isochrones
-    fig, ax = plt.subplots(figsize=(12, 8))
-    sc = plt.scatter(star_bprp, star_gmag, color='red', marker='.', alpha=0.6)
-    p = plt.plot(bprp, gmag, color='black', linewidth=1, label='Isochrone')
-    p = plt.plot(bprp, gmag_binary, color='blue', linewidth=1, label='Binary Track')
-    
-    plt.xlim(x_wid)
-    plt.ylim(y_wid)
-
-    ax_ = sc.axes
-    ax_.invert_yaxis()
-    ax_.set_xlabel(r'$BP-RP$', fontsize=12)
-    ax_.set_ylabel(r'$G_{mag}$', fontsize=12)
-    ax_.set_title(f'Star Distribution in {cluster_name} \nAge {data[cluster_name]["isochrone"]}, Metallicity {data[cluster_name]["metallicity"]}')
-    ax_.grid(True)
-    plt.legend()
+    (fig, ax), sc, (p1, p2), cleaned_clu = plot_cmd(cluster_name, tup, d, clu_df, iso_df)
+    ax.set_title(f'Star Distribution in {cluster_name} \nAge {data[cluster_name]["isochrone"]}, Metallicity {data[cluster_name]["metallicity"]}')
 
     if say_what == 'show':
         crs = mplcursors.cursor(ax,hover=True)
