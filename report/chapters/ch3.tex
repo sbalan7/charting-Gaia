@@ -34,15 +34,23 @@ The King's profile\citep{kingprofile} is fitted for all the clusters in the stud
 $$f = k \left( \frac{r_c}{\sqrt{r^2+r_c^2}} - \frac{r_t}{\sqrt{r_c^2+r_t^2}} \right) ^2$$
 $k$ is an amplitude or a scaling factor, $r_c$ is the core radius and $r_t$ is the tidal radius. $k$ is simply the surface density of the innermost bin. $r_c$ and $r_t$ are the variable parameters which can be modified to get the best fit to the data. From the fitting procedure we can determine the core radius and tidal radius of the star cluster. The profile can be plotted easily with the \lstinline{astropy}\citep{astropy} module.
 
-\section{Determining Mass and Density}
+\section{Determining Mass Function}
 The mass of stars in the main sequence is strongly correlated with the magnitude of the stars. This relation can be found by fitting a polynomial to our data. \lstinline{numpy} {}has a submodule for dealing with polynomials and the \lstinline{polyfit} {}will fit a polynomial to the given data. In this study, we attempted to fit a cubic polynomial to approximate the relationship between magnitude and mass. 
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\linewidth]{NGC 2281_mass_dist.png}
 	\caption{Fitting the polynomial for the isochrone of NGC 2281}
-	\label{fig:image_n}
+	\label{fig:im6}
 \end{figure}
 
+\subsection{Central Density}
+To determine the central density, we will consider the stars in a small radius around the center of the cluster. We will first convert the radius of this region into parsecs to calculate the volume using the standard formula for the volume of a sphere. Next, we will sum up the estimated masses of all the stars in this region. This can be done by finding the mass by substituting the known magnitude values into the mass function estimated by the isochrone. Now that we have evaluated both the mass of the center and its volume, we can find the central density.
 
+\section{Determing the Relaxation Time for the Clusters}
+With the average mass, number of stars in the cluster, central density and cluster radius, we have found out all the parameters we need to find the relaxation time. We can use this equation to evalute the same.
+$$t_{rc} = 1.491 \times 10^7 \text{yr} \times \frac{k}{\ln(0.4 N_*)} <m_*>^{-1} \rho_{M, 0}^{1/2} r_c^3$$
 
+Finally, since all the stars along the isochrone are of similar age, we can use the isochrone age as an approximation for the age of the entire cluster. In combination with the calculated time, this allows us to identify the relaxations the cluster has undergone.
+
+$$N_{relax} = C_{Age}/t_{rc}$$
