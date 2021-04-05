@@ -9,9 +9,6 @@ import os
 with open('select.json') as f:
     data = json.load(f)
 
-def poly_c(x, poly):
-    return np.sum([poly[i]*np.power(x, i) for i in range(len(poly))])
-
 lgmag, hgmag = 10, 18
 
 for cluster_name, subdata in data.items():
@@ -30,7 +27,9 @@ for cluster_name, subdata in data.items():
     plt.ylabel('Mass')
     plt.legend()
     plt.show()
+    data[cluster_name]["mass_fn"] = list(poly)
 
 
-
+with open('select.json', 'w') as f:
+    json.dump(data, f, indent=4)
 

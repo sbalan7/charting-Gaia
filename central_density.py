@@ -36,6 +36,7 @@ for cluster_name, subdata in data.items():
     red_clu_df = clu_df[clu_df['Rad_Dist']<subdata['central_r']]
     (fig, ax), sc, (p1, p2), cleaned_clu = plot_cmd(cluster_name, tup, d, red_clu_df, iso_df)
     central_mass = red_clu_df['Mass'].sum()
+    
     parsec_rad = (subdata['central_r']/60)*(np.pi/180)*d
     central_vol = (4/3) * np.pi * (parsec_rad ** 3)
     central_density = central_mass / central_vol
