@@ -41,7 +41,6 @@ def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save', w=Fals
         final_path = os.getcwd() + '/plots/tracks/' + cluster_name + '.png'
         plt.savefig(final_path)
 
-
 # Findging the mean and median value of AG and E(BP-RP)
 def find_ag_e_bprp(clu_df, cluster_name, show_plot='n'):
     ag = clu_df[clu_df['AG'] <= 90]
@@ -86,7 +85,6 @@ for cluster_name, subdata in data.items():
     ag, bprp = subdata['AG'], subdata['E_BP-RP']
     tup = (ag, float(subdata['g_corr']), bprp, float(subdata['b_corr']), float(subdata['diff_corr']))
     
-
     if len(sys.argv) > 2:
         plot_isochrone(iso_df, clu_df, tup, d, cluster_name, sys.argv[1], w)
     elif len(sys.argv) > 1:
