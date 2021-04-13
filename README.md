@@ -10,7 +10,23 @@ The data from WEBDA is then also used to download parsec isochrones from the CMD
 
 The `/report/` directory has the tex files and bib files used to generate the project report where a more detailed overview of the project is given. The BibTeX distribution is used for LaTeX.
 
-### Dependencies for the code:
+## Properties of the cluster in `select.json`:
+For every cluster in the file, under its name, there are multiple listed properties needed for the calculations. These properties are described as:
+* "isochrone": The age of the parsec isochrone to be downloaded from CMD's database
+* "distance": The distance of the cluster from Earth, in parsecs
+* "g_corr": A correction added to the magnitude axis to get the isochrone to fit
+* "b_corr": A correction added to the color axis to get the isochrone to fit
+* "diff_corr": The difference between the isochrone and the curve splitting the binary track
+* "metallicity": The metallicity value for the stars in the cluster
+* "centerRA": The right ascension of the center of the cluster
+* "centerDE": The declination of the center of the cluster
+* "cluster_r": The radius of the cluster in arcminutes in the sky
+* "central_r": The radius of the core of the cluster in arcminutes
+* "mass_fn": The list of coefficients of the polynomial for mass calculation
+* "AG": The estimated extinction coefficient for the cluster
+* "E_BP-RP": The estimated E_BP-RP for the cluster
+
+## Dependencies for the code:
 * python 3.8.5
 * astropy 4.2
 * matplotlib 3.3.3
