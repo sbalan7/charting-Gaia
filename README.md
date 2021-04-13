@@ -2,11 +2,13 @@
 
 Using Gaia data to make some plots for open clusters and analysing them. 
 
-#### Choosing some clusters for analysis
-Star cluster plots are scraped from the VizieR database with Selenium, as implemented in `trawl_vizier.py`. These images undergo some basic transforms for better understanding in the `fix_images.py` file. The 1229 cluster plots are now analysed and here we select 10 plots for further analysis. These clusters selected are IC 4651, IC 4756, NGC 752, NGC 1664, NGC 2281, NGC 2287, NGC 2527, NGC 6281, NGC 6405, NGC 6475. If you already have selected clusters for analysis, proceed to the next step rather than perform these again.
+#### Step 0 : Choosing some clusters for analysis
+Star cluster plots are scraped from the [VizieR database](http://vizier.u-strasbg.fr/viz-bin/VizieR) with Selenium, as implemented in `trawl_vizier.py`. The trawler file takes around half an hour to run - querying and capturing the raw CMDs from VizieR's plotter. These images undergo some basic transforms for better understanding in the `fix_images.py` file. The 1229 cluster plots are now analysed and here we select 10 plots for further analysis. These clusters selected are IC 4651, IC 4756, NGC 752, NGC 1664, NGC 2281, NGC 2287, NGC 2527, NGC 6281, NGC 6405, NGC 6475. If you already have selected clusters for analysis, proceed to the next step rather than perform these again.
 
-#### Making the CMD plots for analysis
-The data related to these clusters are taken from the WEBDA database and added to the `select.json` file. The star data is downloaded into csv files by the `get_multiple_clusters.py` file. Here, plots of the raw data are also made. We can arbitrarily split the points which correspond to binaries and single stars already. The `generate_radec.py` file lists out celestial coordinates for all star targets in the data and saves them in a file. This is done to query information about the stars by using the corresponding the celestial coordinates. 
+#### Step 1 : Making the CMD plots for analysis
+The data related to these clusters are taken from the [WEBDA database](https://webda.physics.muni.cz/navigation.html) and added to the `select.json` file. The star data is downloaded into csv files by the `get_multiple_clusters.py` file. Here, plots of the raw data are also made. We can arbitrarily split the points which correspond to binaries and single stars already. The `generate_radec.py` file lists out celestial coordinates for all star targets in the data and saves them in a file. This is done to query information about the stars by using the corresponding the celestial coordinates. 
+
+![Raw plot](https://raw.githubusercontent.com/sbalan7/charting-Gaia/main/report/imgs/IC%204651.png)
 
 **Properties of the cluster in `select.json`:**
 For every cluster in the file, under its name, there are multiple listed properties needed for the calculations. These properties are described as:
@@ -24,13 +26,15 @@ For every cluster in the file, under its name, there are multiple listed propert
 * "AG": The estimated extinction coefficient for the cluster
 * "E_BP-RP": The estimated E_BP-RP for the cluster
 
-#### Downloading and fitting isochrones
-The data from WEBDA is then also used to download parsec isochrones from the CMD database. The website is automated with Selenium again to fill in the form as in `download_isochrones.py`. The downloaded data is now processed in `read_isochrones.py`. It generates a fitted isochrone with the cluster plot. The toggling of the purpose of the `read_isochrones.py` file is done by passing command line arguments while executing the file. It has the method to separate the single and binary track. Passing the argument `show` with the file highlights individual points in the plot. Otherwise the file defaults to saving a new copy of the isochrone tracks. Passing any additional argument allows for overwriting the file where the binary track is saved. This will be triggered only if `show` is passed before. 
+#### Step 2 : Downloading and fitting isochrones
+The data from WEBDA is then also used to download parsec isochrones from the [CMD database](http://stev.oapd.inaf.it/cgi-bin/cmd). The website is automated with Selenium again to fill in the form as in `download_isochrones.py`. The downloaded data is now processed in `read_isochrones.py`. It generates a fitted isochrone with the cluster plot. The toggling of the purpose of the `read_isochrones.py` file is done by passing command line arguments while executing the file. It has the method to separate the single and binary track. Passing the argument `show` with the file highlights individual points in the plot. Otherwise the file defaults to saving a new copy of the isochrone tracks. Passing any additional argument allows for overwriting the file where the binary track is saved. This will be triggered only if `show` is passed before. 
 
-#### Centering clusters for final analysis
+![Fitted Isochrone](https://raw.githubusercontent.com/sbalan7/charting-Gaia/main/report/imgs/NGC%202287.png)
+
+#### Step 3 : Centering clusters for final analysis
 `center_clusters.py` uses the mean shift algorithm as implemented by `scikit-learn` and determines the centers of the clusters. Then the `astropy` module is used to compute the radial distance between the targets and the cluster center. The radial distribution plot for the single and binary track is also generated by this file. `mass_distr.py` has code to fit a polynomial to find the mass function for each cluster. `central_density.py` is used to calculate the central density of the cluster by analysing its core.
 
-#### Generating the project report
+#### Step 4 : Generating the project report
 The `/report/` directory has the tex files and bib files used to generate the project report where a more detailed overview of the project is given. The BibTeX distribution is used for LaTeX.
 
 
@@ -42,4 +46,5 @@ The `/report/` directory has the tex files and bib files used to generate the pr
 * pandas 1.2.1
 * scikit-learn 0.24.0
 * mplcursors 0.4
+* selenium 3.141.0
 
