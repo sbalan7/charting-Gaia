@@ -8,7 +8,7 @@ Star cluster plots are scraped from the VizieR database with Selenium, as implem
 #### Making the CMD plots for analysis
 The data related to these clusters are taken from the WEBDA database and added to the `select.json` file. The star data is downloaded into csv files by the `get_multiple_clusters.py` file. Here, plots of the raw data are also made. We can arbitrarily split the points which correspond to binaries and single stars already. The `generate_radec.py` file lists out celestial coordinates for all star targets in the data and saves them in a file. This is done to query information about the stars by using the corresponding the celestial coordinates. 
 
-## Properties of the cluster in `select.json`:
+**Properties of the cluster in `select.json`:**
 For every cluster in the file, under its name, there are multiple listed properties needed for the calculations. These properties are described as:
 * "isochrone": The age of the parsec isochrone to be downloaded from CMD's database
 * "distance": The distance of the cluster from Earth, in parsecs
