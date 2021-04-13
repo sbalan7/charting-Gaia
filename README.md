@@ -1,6 +1,6 @@
 # charting-Gaia
 
-Using Gaia data to make some plots for open clusters. 
+Using Gaia data to make some plots for open clusters and analysing them. 
 
 #### Choosing some clusters for analysis
 Star cluster plots are scraped from the VizieR database with Selenium, as implemented in `trawl_vizier.py`. These images undergo some basic transforms for better understanding in the `fix_images.py` file. The 1229 cluster plots are now analysed and here we select 10 plots for further analysis. These clusters selected are IC 4651, IC 4756, NGC 752, NGC 1664, NGC 2281, NGC 2287, NGC 2527, NGC 6281, NGC 6405, NGC 6475. If you already have selected clusters for analysis, proceed to the next step rather than perform these again.
