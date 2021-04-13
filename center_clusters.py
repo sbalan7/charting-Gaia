@@ -1,6 +1,7 @@
 from astropy.coordinates import SkyCoord
 from sklearn.cluster import MeanShift
 import matplotlib.pyplot as plt
+from utils import load_data
 import astropy.units as u
 import pandas as pd
 import numpy as np
@@ -13,22 +14,13 @@ with open('select.json', 'r') as f:
 
 pd.set_option('display.max_columns', None)
 
-def load_data(cluster_name):
-    clu_path = os.getcwd() + '/cluster_tsvs/' + cluster_name.replace(' ', '_') + '.tsv'
-    clu_headers = 'sentRA  sentDE   _r   _RAJ2000h _RAJ2000m _RAJ2000s   _DEJ2000h _DEJ2000m _DEJ2000s    RA_ICRS   e_RA   DE_ICRS  e_DE  Source   Plx    e_Plx   pmRA   e_pmRA   pmDE   e_pmDE   Dup   FG  e_FG    Gmag     e_Gmag FBP    e_FBP  BPmag   e_BPmag    FRP   e_FRP   RPmag     e_RPmag  BP-RP   RV   e_RV  Teff   AG   E(BP-RP) Rad  Lum  '.split()
-
-    clu_df = pd.read_csv(clu_path,
-                         sep='\s+',
-                         skiprows=1,
-                         names=clu_headers)
-    
+def get_binary_data(cluster_name, clu_headers):
     clu_bin_path = os.getcwd() + '/binaries/' + cluster_name + '_binaries.txt'
-    
     clu_bin_df = pd.read_csv(clu_bin_path,
                              sep='\s+',
                              names=clu_headers).drop_duplicates()
     
-    return clu_df, clu_bin_df
+    return clu_bin_df
     
 def center_cluster(clu_df):
     X = clu_df[['sentRA', 'sentDE']]
@@ -66,7 +58,6 @@ def find_area(s_x, s_y, b_x, b_y):
     
     return area_b - area_s
 
-
 def plot_radial_dist(clu_df):
     rad_path = os.getcwd() + '/plots/radial_dist/' + cluster_name + '_rad.png'
     bin_df = clu_df[clu_df['Type'] == 'Binary'].sort_values('Rad_Dist')
@@ -101,7 +92,8 @@ def plot_radial_dist(clu_df):
 
 
 for cluster_name, subdata in data.items():
-    clu_df, clu_bin_df = load_data(cluster_name)
+    clu_df = load_data(cluster_name, False)
+    clu_bin_df = get_binary_data(cluster_name, clu_df.columns)
     x, y = center_cluster(clu_df)
     data[cluster_name]['centerRA'], data[cluster_name]['centerDE'] = x, y
     center = SkyCoord(ra=x*u.degree, dec=y*u.degree, frame='icrs')
