@@ -51,28 +51,42 @@ def get_singles(clu_df, clu_bin_df):
     clu_bin_df['Source'] = clu_bin_df['Source'].astype(str).astype(int)
     clu_df['Source'] = clu_df['Source'].astype(int)
     clu_df = pd.merge(clu_df, clu_bin_df['Source'], how = 'outer', on = ['Source'], indicator=True)
-    d={"left_only":"Binary", "right_only":"WUT", "both":"Single"}
+    d={"left_only":"Single", "right_only":"WUT", "both":"Binary"}
     clu_df['Type'] = clu_df['_merge'].map(d)
     clu_df = clu_df.drop(['_merge'], axis=1)
     return clu_df
 
 def find_area(s_x, s_y, b_x, b_y):
-    diff_s_x = [a-b for a, b in zip(s_x, s_x[1:])]
-    diff_b_x = [a-b for a, b in zip(b_x, b_x[1:])]
+    diff_s_x = [b-a for a, b in zip(s_x, s_x[1:])]
+    diff_b_x = [b-a for a, b in zip(b_x, b_x[1:])]
     s_y, b_y = s_y[:-1], b_y[:-1]
     
     area_s = np.sum(np.multiply(diff_s_x, s_y))
     area_b = np.sum(np.multiply(diff_b_x, b_y))
     
-    return area_s - area_b
+    return area_b - area_s
 
 
 def plot_radial_dist(clu_df):
     rad_path = os.getcwd() + '/plots/radial_dist/' + cluster_name + '_rad.png'
     bin_df = clu_df[clu_df['Type'] == 'Binary'].sort_values('Rad_Dist')
     sin_df = clu_df[clu_df['Type'] == 'Single'].sort_values('Rad_Dist')
-    s_x, s_y = sin_df['Rad_Dist'], np.arange(sin_df['Rad_Dist'].size)/sin_df['Rad_Dist'].size
-    b_x, b_y = bin_df['Rad_Dist'], np.arange(bin_df['Rad_Dist'].size)/bin_df['Rad_Dist'].size
+
+    b_x = bin_df['Rad_Dist']
+    b_min, b_max = b_x.min(), b_x.max()
+    
+    s_x = sin_df[(sin_df['Rad_Dist']<=b_max)&(sin_df['Rad_Dist']>=b_min)]['Rad_Dist']
+    the_m = s_x.max() if s_x.max()>b_max else b_max
+
+    b_y = np.arange(b_x.size)/b_x.size
+    s_y = np.arange(s_x.size)/s_x.size
+
+    s_x = s_x.append(pd.Series(the_m))
+    b_x = b_x.append(pd.Series(the_m))
+    
+    s_y = np.append(s_y, 1.0)
+    b_y = np.append(b_y, 1.0)
+
     area = find_area(s_x, s_y, b_x, b_y)
 
     plt.step(s_x, s_y, label='Single Stars')
