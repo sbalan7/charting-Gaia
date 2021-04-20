@@ -28,7 +28,7 @@ for cluster_name, subdata in data.items():
 
     (fig, ax), sc, (p1, p2), cleaned_clu = plot_cmd(cluster_name, tup, d, clu_df, iso_df)
     ax.set_title(f'Star Distribution in {cluster_name} \nAge {data[cluster_name]["isochrone"]}, '
-                   'Metallicity {data[cluster_name]["metallicity"]}, Avg Mass {avg_mass}')
+                   f'Metallicity {data[cluster_name]["metallicity"]}, Avg Mass {avg_mass}')
     plt.show()
 
     red_clu_df = clu_df[clu_df['Rad_Dist']<subdata['central_r']]

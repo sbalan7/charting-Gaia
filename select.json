@@ -28,8 +28,8 @@
         "metallicity": "-0.02",
         "centerRA": 279.64452121792715,
         "centerDE": 5.440302118440128,
-        "cluster_r": 0,
-        "central_r": 0,
+        "cluster_r": 60,
+        "central_r": 6,
         "mass_fn": [
             -0.0011080734116665062,
             0.05330698098627208,
@@ -48,8 +48,8 @@
         "metallicity": "-0.01",
         "centerRA": 29.23498030735206,
         "centerDE": 37.777784724146635,
-        "cluster_r": 0,
-        "central_r": 0,
+        "cluster_r": 60,
+        "central_r": 9,
         "mass_fn": [
             -0.001447487160246545,
             0.06633699803638886,
@@ -88,8 +88,8 @@
         "metallicity": "0.02",
         "centerRA": 102.07291037575784,
         "centerDE": 41.05564427105314,
-        "cluster_r": 0,
-        "central_r": 0,
+        "cluster_r": 60,
+        "central_r": 2,
         "mass_fn": [
             -0.0013179331919863711,
             0.06116331101940748,
@@ -108,8 +108,8 @@
         "metallicity": "0.04",
         "centerRA": 101.50894180156111,
         "centerDE": -20.70579554131146,
-        "cluster_r": 0,
-        "central_r": 0,
+        "cluster_r": 50,
+        "central_r": 2,
         "mass_fn": [
             0.03822530794148829,
             -1.4067439466801288,
