@@ -5,7 +5,7 @@
 The radial distributions were calculated for each cluster individually for each track. The mean shift algorithm was used to find the center of the clusters. The celestial coordinates of the center of the cluster allows us to calculate the radial distance of every star in the cluster from its center. The \lstinline{astropy.coordinates} {}submodule has some useful classes in this regard. We can get the radial separation of these stars from the cluster center in arcminutes.
 
 \subsection{Mean Shift Algorithm}
-The mean shift algorithm is an unsupervised, non-parametric, clustering algorithm. It iteratively shifts points towards the highest density of data points - cluster centers - and classifies them accordingly. It doesn't make any assumption about the model like K-means or Gaussian mixture models. The \lstinline{scikit-learn} {}implementation was used. The model takes in a parameter - bandwidth. This bandwidth is used in the RBF kernel for the algorithm. This parameter defines how many clusters will be there in the data. Setting a relatively high value for this makes sure there is only one cluster in the data. 
+The mean shift algorithm is an unsupervised, non-parametric, clustering algorithm. It iteratively shifts points towards the highest density of data points - cluster centers - and classifies them accordingly. It doesn't make any assumption about the model like K-means or Gaussian mixture models. The \lstinline{scikit-learn} {}implementation was used. The model takes in a parameter - bandwidth. This bandwidth is used in the RBF kernel for the algorithm. This parameter defines how many clusters will be there in the data. Setting a relatively high value for this makes sure there is only one cluster picked up from the data. 
 
 \subsection{Plotting the Distributions}
 The calculated radial distance was plotted against the number of stars under that distance for a single track and a binary track. 
@@ -29,10 +29,20 @@ The calculated radial distance was plotted against the number of stars under tha
 \label{fig:sim1}
 \end{figure}
 
+With both the tracks closer to each other at the core for NGC 752, we find that the central area of the cluster has an equal proportion of single and binary stars. From a broader perspective, we find that there are many more single stars in the cluster when the entirety is taken. The area parameter mentioned in the plot is the area between the curves of the single and binary track. However, when there are more single stars, this area is negative. The binary track is more jagged and stepped because there are many more single stars in a cluster. Nevertheless, both the curves are normalized to a percentage scale so that they can be plotted together and the area between them can be evaluated.
+
 \section{King's Profile}
 The King's profile\citep{kingprofile} is fitted for all the clusters in the study. The stars are divided into bins based on the radial distance from the cluster center. These bins are all annular rings of equal areas. This would mean the $n^{th}$ bin would be sandwiched between rings of radius $\sqrt{n-1}R$ and $\sqrt{n}R$ where $R$ is the radius of the cluster. After finding the number of stars in one bin, dividing that number by the area of the ring gives the surface density. When plotted against the radius on a log-log plot, we get a distribution of stars based on their proximities to the cluster center. Now we fit the curve given by the following equation to the data.
 $$f = k \left( \frac{r_c}{\sqrt{r^2+r_c^2}} - \frac{r_t}{\sqrt{r_c^2+r_t^2}} \right) ^2$$
 $k$ is an amplitude or a scaling factor, which is simply the surface density of the innermost bin. $r_c$ is the core radius and $r_t$ is the tidal radius.  $r_c$ and $r_t$ are the variable parameters which can be modified to get the best fit to the data. From the fitting procedure we can determine the core radius and tidal radius of the star cluster. The profile can be plotted easily with the \lstinline{astropy} {} module.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{IC_4756_kings.png}
+	\caption{King's Profile for IC 4756}
+	\label{fig:im6}
+\end{figure}
+
 
 \section{Determining Mass Function}
 The mass of stars in the main sequence is strongly correlated with the magnitude of the stars. This relation can be found by fitting a polynomial to our data. \lstinline{numpy} {}has a submodule for dealing with polynomials and the \lstinline{polyfit} {}will fit a polynomial to the given data. In this study, we attempted to fit a cubic polynomial to approximate the relationship between magnitude and mass. 
@@ -41,16 +51,18 @@ The mass of stars in the main sequence is strongly correlated with the magnitude
 	\centering
 	\includegraphics[width=0.6\linewidth]{NGC 2281_mass_dist.png}
 	\caption{Fitting the polynomial for the isochrone of NGC 2281}
-	\label{fig:im6}
+	\label{fig:im7}
 \end{figure}
 
 \subsection{Central Density}
-To determine the central density, we will consider the stars in a small radius around the center of the cluster. We will first convert the radius of this region into parsecs to calculate the volume using the standard formula for the volume of a sphere. Next, we will sum up the estimated masses of all the stars in this region. This can be done by finding the mass by substituting the known magnitude values into the mass function estimated by the isochrone. Now that we have evaluated both the mass of the center and its volume, we can find the central density.
+To determine the central density, we will consider the stars in a small radius around the center of the cluster. We will first convert the radius of this region into parsecs to calculate the volume using the standard formula for the volume of a sphere. Next, we will sum up the estimated masses of all the stars in this region. This can be done by finding the mass by substituting the known magnitude values into the mass function estimated by the isochrone. Now that we have evaluated both the mass of the center and its volume, we can find the central density. Clusters with larger central density have more stars in the core and would have undergone multiple relaxations.
 
 \section{Determing the Relaxation Time for the Clusters}
-With the average mass, number of stars in the cluster, central density and cluster radius, we have found out all the parameters we need to find the relaxation time. We can use this equation to evalute the same.
+With the average mass, the number of stars in the cluster, central density and cluster radius, we have found out all the parameters we need to find the relaxation time. Relaxation time is a measure of how long an average star in a cluster can retain its initial energy. We can use this equation to evaluate the same.
 $$t_{rc} = 1.491 \times 10^7 \text{yr} \times \frac{k}{\ln(0.4 N_*)} <m_*>^{-1} \rho_{M, 0}^{1/2} r_c^3$$
 
-Finally, since all the stars along the isochrone are of similar age, we can use the isochrone age as an approximation for the age of the entire cluster. In combination with the calculated time, this allows us to identify the relaxations the cluster has undergone.
+Finally, since all the stars along the isochrone are of similar age, we can use the isochrone age as an approximation for the age of the entire cluster. In combination with the calculated time, this allows us to identify the relaxations the cluster has undergone. This figure gives an estimate of how many relaxation periods a cluster would have undergone.
 
 $$N_{relax} = C_{Age}/t_{rc}$$
+
+The more relaxations a star would have undergone, the more time it would have had to ensure it settles into a final structure. External gravitational influences from some massive event or even the passing by the orbit of another large cluster might disrupt this cycle. Plotting the area between the tracks along with $N_{relax}$ might help us understand if there is a link between these structural features of a cluster.
