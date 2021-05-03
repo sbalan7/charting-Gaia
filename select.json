@@ -198,5 +198,145 @@
         ],
         "AG": 0.2,
         "E_BP-RP": 0.1
+    },
+    "NGC 2301": {
+        "isochrone": "gy",
+        "distance": "",
+        "g_corr": "0",
+        "b_corr": "0",
+        "diff_corr": "0.75",
+        "metallicity": "0",
+        "centerRA": 0,
+        "centerDE": 0,
+        "cluster_r": 0,
+        "central_r": 0,
+        "mass_fn": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "AG": 0,
+        "E_BP-RP": 0
+    },
+    "NGC 2360": {
+        "isochrone": "gy",
+        "distance": "",
+        "g_corr": "0",
+        "b_corr": "0",
+        "diff_corr": "0.75",
+        "metallicity": "0",
+        "centerRA": 0,
+        "centerDE": 0,
+        "cluster_r": 0,
+        "central_r": 0,
+        "mass_fn": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "AG": 0,
+        "E_BP-RP": 0
+    },
+    "NGC 2423": {
+        "isochrone": "gy",
+        "distance": "",
+        "g_corr": "0",
+        "b_corr": "0",
+        "diff_corr": "0.75",
+        "metallicity": "0",
+        "centerRA": 0,
+        "centerDE": 0,
+        "cluster_r": 0,
+        "central_r": 0,
+        "mass_fn": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "AG": 0,
+        "E_BP-RP": 0
+    },
+    "NGC 2422": {
+        "isochrone": "gy",
+        "distance": "",
+        "g_corr": "0",
+        "b_corr": "0",
+        "diff_corr": "0.75",
+        "metallicity": "0",
+        "centerRA": 0,
+        "centerDE": 0,
+        "cluster_r": 0,
+        "central_r": 0,
+        "mass_fn": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "AG": 0,
+        "E_BP-RP": 0
+    },
+    "NGC 6208": {
+        "isochrone": "gy",
+        "distance": "",
+        "g_corr": "0",
+        "b_corr": "0",
+        "diff_corr": "0.75",
+        "metallicity": "0",
+        "centerRA": 0,
+        "centerDE": 0,
+        "cluster_r": 0,
+        "central_r": 0,
+        "mass_fn": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "AG": 0,
+        "E_BP-RP": 0
+    },
+    "NGC 6633": {
+        "isochrone": "gy",
+        "distance": "",
+        "g_corr": "0",
+        "b_corr": "0",
+        "diff_corr": "0.75",
+        "metallicity": "0",
+        "centerRA": 0,
+        "centerDE": 0,
+        "cluster_r": 0,
+        "central_r": 0,
+        "mass_fn": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "AG": 0,
+        "E_BP-RP": 0
+    },
+    "NGC 6811": {
+        "isochrone": "gy",
+        "distance": "",
+        "g_corr": "0",
+        "b_corr": "0",
+        "diff_corr": "0.75",
+        "metallicity": "0",
+        "centerRA": 0,
+        "centerDE": 0,
+        "cluster_r": 0,
+        "central_r": 0,
+        "mass_fn": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "AG": 0,
+        "E_BP-RP": 0
     }
 }
