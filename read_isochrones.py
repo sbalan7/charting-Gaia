@@ -25,7 +25,6 @@ def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save', w=Fals
         print(t)
         print(row.to_string(header=False, index=False))
         return t
-
     (fig, ax), sc, (p1, p2), cleaned_clu = plot_cmd(cluster_name, tup, d, clu_df, iso_df)
     ax.set_title(f'Star Distribution in {cluster_name} \nAge {data[cluster_name]["isochrone"]}, Metallicity {data[cluster_name]["metallicity"]}')
 

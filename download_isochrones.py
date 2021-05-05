@@ -14,8 +14,9 @@ for key, values in data.items():
 driver = webdriver.Firefox()
 
 for cluster, (age, met) in info.items():
+    print(cluster)
     path = os.getcwd() + '/isochrones/' + cluster.replace(' ', '_') + '.dat'
-    driver.get("http://stev.oapd.inaf.it/cgi-bin/cmd_3.4")
+    driver.get("http://stev.oapd.inaf.it/cgi-bin/cmd")
     system_select = driver.find_element_by_xpath("/html/body/form/div/fieldset[2]/p/select/option[32]").click()
     in1 = driver.find_element_by_xpath("/html/body/form/div/fieldset[7]/table/tbody/tr[3]/td[2]/input")
     in1.clear()
@@ -31,10 +32,12 @@ for cluster, (age, met) in info.items():
     in4.clear()
     in4.send_keys(met)
     driver.find_element_by_xpath("/html/body/form/div/input[4]").click()
-    time.sleep(7)
+    print("loaded_data")
+    time.sleep(10)
     driver.find_element_by_xpath("/html/body/form/fieldset[1]/p[1]/a").click()
-    time.sleep(5)
+    time.sleep(10)
     with open(path, 'w') as f:
         f.write(driver.page_source)
+    print("done")
 
 driver.quit()

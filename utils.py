@@ -34,7 +34,7 @@ def find_mass_fn(iso_df):
 
 def plot_cmd(cluster_name, tup, d, clu_df, iso_df=None):
     AG, g_corr, BPRP, b_corr, diff_corr = tup
-    
+    print(cluster_name)
     if iso_df is not None:
         # Remove outliers in isochrone data
         cleaned_iso = iso_df.loc[(iso_df['Gmag'] > -5) & (iso_df['Gmag'] < 20)]
