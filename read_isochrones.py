@@ -7,6 +7,7 @@ import json
 import sys
 import os
 
+
 with open('select.json') as f:
     data = json.load(f)
 
@@ -16,19 +17,19 @@ def plot_isochrone(iso_df, clu_df, tup, d, cluster_name, say_what='save', w=Fals
     def text(sel, w):
         row = cleaned_clu[(cleaned_clu['Gmag'] == sel.target[1]) & (cleaned_clu['BP-RP'] == sel.target[0])]
         if w:
-            f.write(row['Source'].astype(int))
-            f.write('\n')
-        try:
-            t = f"Source: {int(row['Source'])}\nRA: {float(row['sentRA'])}\nDE: {float(row['sentDE'])}"
-        except TypeError:
-            t = f"Source: nan\nRA: nan\nDE: nan"
-        print(t)
-        print(row.to_string(header=False, index=False))
+            try:
+                t = f"Source: {int(row['Source'])}\nRA: {float(row['sentRA'])}\nDE: {float(row['sentDE'])}"
+                f.write(row.to_string(header=False, index=False))
+                f.write('\n')
+            except TypeError:
+                t = f"Source: nan\nRA: nan\nDE: nan"
+            except IndexError:
+                t = f"Source: nan\nRA: nan\nDE: nan"
         return t
     (fig, ax), sc, (p1, p2), cleaned_clu = plot_cmd(cluster_name, tup, d, clu_df, iso_df)
     ax.set_title(f'Star Distribution in {cluster_name} \nAge {data[cluster_name]["isochrone"]}, Metallicity {data[cluster_name]["metallicity"]}')
 
-    if say_what == 'show':
+    if say_what == 'show' and w:
         crs = mplcursors.cursor(ax,hover=True)
         @crs.connect("add")
         def _(sel):
@@ -74,19 +75,21 @@ def find_ag_e_bprp(clu_df, cluster_name, show_plot='n'):
 
 
 for cluster_name, subdata in data.items():
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 2 and cluster_name.replace(' ', '_') in sys.argv:
         binary_path = os.getcwd() + '/binaries/' + cluster_name+'_binaries.txt'
         f = open(binary_path, 'w')
         w = True
+    else:
+        continue
     
     d = int(subdata['distance'])
     iso_df, clu_df = load_data(cluster_name)
     ag, bprp = subdata['AG'], subdata['E_BP-RP']
     tup = (ag, float(subdata['g_corr']), bprp, float(subdata['b_corr']), float(subdata['diff_corr']))
     
-    if len(sys.argv) > 2:
+    if w:
         plot_isochrone(iso_df, clu_df, tup, d, cluster_name, sys.argv[1], w)
-    elif len(sys.argv) > 1:
+    elif len(sys.argv) == 2:
         plot_isochrone(iso_df, clu_df, tup, d, cluster_name, sys.argv[1])
     else:
         plot_isochrone(iso_df, clu_df, tup, d, cluster_name)

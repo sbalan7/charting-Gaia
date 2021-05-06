@@ -182,7 +182,7 @@
     "NGC 6475": {
         "isochrone": "0.2gy",
         "distance": "301",
-        "g_corr": "0",
+        "g_corr": "-0.15",
         "b_corr": "0",
         "diff_corr": "0.75",
         "metallicity": "0.0152",
@@ -302,8 +302,8 @@
     "NGC 6811": {
         "isochrone": "0.630gy",
         "distance": "1215",
-        "g_corr": "0.4",
-        "b_corr": "0.2",
+        "g_corr": "0.25",
+        "b_corr": "0.15",
         "diff_corr": "0.75",
         "metallicity": "-0.03",
         "centerRA": 0,
