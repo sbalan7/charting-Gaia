@@ -120,12 +120,12 @@
         "E_BP-RP": 0.079
     },
     "NGC 2527": {
-        "isochrone": "0.8gy",
+        "isochrone": "0.4456gy",
         "distance": "601",
-        "g_corr": "-0.12",
-        "b_corr": "-0.1",
+        "g_corr": "0.3",
+        "b_corr": "-0.05",
         "diff_corr": "0.75",
-        "metallicity": "-0.06",
+        "metallicity": "-0.1",
         "centerRA": 121.25353421988439,
         "centerDE": -28.10607078207928,
         "cluster_r": 38,
@@ -222,8 +222,8 @@
     "NGC 2360": {
         "isochrone": "0.561gy",
         "distance": "1887",
-        "g_corr": "0",
-        "b_corr": "0.5",
+        "g_corr": "-0.3",
+        "b_corr": "0.3",
         "diff_corr": "0.75",
         "metallicity": "-0.15",
         "centerRA": 0,

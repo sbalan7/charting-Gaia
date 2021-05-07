@@ -75,10 +75,12 @@ def find_ag_e_bprp(clu_df, cluster_name, show_plot='n'):
 
 
 for cluster_name, subdata in data.items():
-    if len(sys.argv) > 2 and cluster_name.replace(' ', '_') in sys.argv:
+    if len(sys.argv) > 2 and (cluster_name.replace(' ', '_') in sys.argv or sys.argv[2] == 'all'):
         binary_path = os.getcwd() + '/binaries/' + cluster_name+'_binaries.txt'
         f = open(binary_path, 'w')
         w = True
+    elif len(sys.argv) == 1:
+        w = False
     else:
         continue
     
